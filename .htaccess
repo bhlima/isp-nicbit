@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteRule ^(\.well-know/.*)$ $1 [L]
+RewriteRule ^$ public/ [L]
+RewriteRule ^(.*)$ public/ [L]
+
+
+
+#Set headers to access CORS Requests / allowing localhost only
+Header always add Access-Control-Allow-Origin "*"
+Header always add Access-Control-Allow-Headers "origin, x-requested-with, content-type"
+Header always add Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
