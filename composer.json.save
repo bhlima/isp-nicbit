@@ -1,0 +1,18 @@
+{
+    "name": "nicbit/flavio",
+    "description": "isp - internet service provider mikrotik freeradius",
+    "type": "project",
+    "authors": [
+        {
+            "name": "flavio lima",
+            "email": "bhlima2@gmail.com"
+        }
+    ],
+    "require": {}
+
+"require": {
+  "":"dev-master@dev"
+} 
+
+
+}
