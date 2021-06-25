@@ -20,6 +20,10 @@ class InvoicesModel extends Model
 			'user_id'		 		=> 'required',
 		],
 
+        'update' => [
+			'user_id'		 		=> 'required',
+		],
+
 	];
 
 	protected $validationMessages = [];

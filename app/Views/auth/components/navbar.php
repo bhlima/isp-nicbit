@@ -8,7 +8,7 @@
 
     <img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
     AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
-        9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" />
+        9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="nicbit" />
 
 
 
@@ -58,8 +58,8 @@
                     Financeiro
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="users">Gerenciar Faturas</a>
-                    <a class="dropdown-item" href="#">Gerenciar Carnês</a>
+                    <a class="dropdown-item" href="invoices">Gerenciar Faturas</a>
+                    <a class="dropdown-item" href="#">Transações</a>
                 </div>
             </li>               
                     

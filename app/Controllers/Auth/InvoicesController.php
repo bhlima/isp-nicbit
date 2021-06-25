@@ -51,32 +51,42 @@ class InvoicesController extends Controller
 
 
 		$invoices = new InvoicesModel;
-		$allinvoices = $invoices->getall();
+		$allinvoices = $invoices->findall();
+		$countInvoices = $invoices->countall();
+
+
+		return view('auth/invoices', [
+			'userData' => $this->session->userData,
+			'data' => $allinvoices,
+			'countinvoices' => $countInvoices
+
+		]);
 
 	}
 
 
 	public function updateInvoice()
 	{
-		$users = new UserModel();
-		$getRule = $users->getRule('updateAccount');
-		$users->setValidationRules($getRule);
+		$invoices = new InvoicesModel();
+		$getRule = $invoices->getRule('update');
+		$invoices->setValidationRules($getRule);
 
-		$user = [
-			'id'  	=> $this->session->get('userData.id'),
-			'name' 	=> $this->request->getPost('name')
+		$invoice = [
+			'user_id' 		=> $this->request->getPost('user_id'),
+			'date' 			=> $this->request->getPost('date'),
+			'status_id' 	=> $this->request->getPost('status_id'),
+			'tipo_id' 		=> $this->request->getPost('tipo_id'),
+			'obs' 			=> $this->request->getPost('obs'),
+			'created_at' 	=> $this->request->getPost('created_at'),
+			'updated_at' 	=> $this->request->getPost('updated_at'),
+			'created_by' 	=> $this->request->getPost('created_by'),
 		];
 
-		if (! $users->save($user)) {
-			return redirect()->back()->withInput()->with('errors', $users->errors());
+		if (! $invoices->save($invoice)) {
+			return redirect()->back()->withInput()->with('errors', $invoices->errors());
         }
-
-        // update session data
-        $this->session->push('userData', $user);
-
-        return redirect()->to('account')->with('success', lang('Auth.updateSuccess'));
+        return redirect()->to('invoices')->with('success', lang('Auth.updateSuccess'));
 	}
-
 
 
 	public function deleteInvoice()
@@ -88,4 +98,3 @@ class InvoicesController extends Controller
 
 	}
 
-	

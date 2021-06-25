@@ -164,6 +164,15 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->post('clients/update', 'Auth\ClientsController::update'); // new
     $routes->post('clients/upinfo', 'Auth\ClientsController::updateinfo'); // new
 
+
+    // Invoices
+    $routes->get('invoices', 'Auth\InvoicesController::invoices'); // new
+    $routes->post('invoices/update', 'Auth\InvoicesController::invoicesUpdate'); // new
+
+
+
+
+
     $routes->get('clients/delete/(:num)', 'Auth\ClientsController::delete'); // new
     $routes->post('clients/create', 'Auth\ClientsController::create');
     $routes->get('clients/perfil/(:any)', 'Auth\ClientsController::clientperfil');
