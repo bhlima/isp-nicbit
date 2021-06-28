@@ -90,8 +90,7 @@
                     nicbit
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="<?= site_url('update'); ?> ">Servidor ISPM</a>
-                    <a class="dropdown-item" href="<?= site_url('inslicenca'); ?> ">Inserir chave de licença</a>
+                    <a class="dropdown-item" href="<?= site_url('update'); ?> ">Informações do Servidor Radius / ISPM</a>
                     <a class="dropdown-item" href="<?= site_url('nicbit'); ?> ">Sobre a nicbit</a>
                 </div>
             </li>

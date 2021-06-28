@@ -1,8 +1,6 @@
 <?= $this->extend('auth/layouts/auth') ?>
 <?= $this->section('main') ?>
-
 <?= view('App\Views\auth\components\notifications') ?>
-
 <div class="card">
     <div class="card-body text-center">
         <div class="mb-4">
@@ -15,7 +13,6 @@
             <div class="form-group">
                 <input type="email" class="form-control" placeholder="Digite seu email" value="<?= old('email') ?>" required>
             </div>
-           
             <button class="btn btn-primary shadow-2 mb-4">Enviar nova senha</button>
         </form>
     </div>
