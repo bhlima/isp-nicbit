@@ -21,7 +21,7 @@ class App extends BaseConfig
 	| environments.
 	|
 	*/
-	public $baseURL = 'http://190.89.81.70/nicbit/public';
+	public $baseURL = '';
 
 	/*
 	|--------------------------------------------------------------------------

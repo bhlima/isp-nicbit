@@ -64,7 +64,7 @@
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="areaschown">Areas de atuação</a>
+                    <a class="dropdown-item" href="areas">Areas de atuação</a>
                     <a class="dropdown-item" href="<?= site_url('gateways'); ?> ">Gateway de Pagamento</a>
                     <a class="dropdown-item" href="<?= site_url('dic'); ?> ">Dicionario de atributos</a>
                     <a class="dropdown-item" href="<?= site_url('router'); ?> ">Estações NAS</a>

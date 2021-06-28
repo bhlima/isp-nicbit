@@ -15,32 +15,7 @@
 <!-- load main content -->
 <?= $this->section('main') ?>
 
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Total de Clientes NAS</h5>
-            <h3 class="card-text"><?= $routercount ?></h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Clientes NAS ativos</h5>
-            <h3 class="card-text"> <?= $routerativo ?>  </h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Autenticações hoje</h5>
-            <h3 class="card-text"> 64</h3>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
         <h1 class="h2">Clientes da tabela NAS</h1>

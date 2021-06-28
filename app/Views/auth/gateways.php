@@ -5,24 +5,7 @@
 
 
 <?= $this->section('main') ?>
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Total de gateways</h5>
-            <h3 class="card-text"><?= $ngateways ?></h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Clientes ativos</h5>
-            <h3 class="card-text"><?= $activegateways ?></h3>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
         <h1 class="h2">Gateways</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
