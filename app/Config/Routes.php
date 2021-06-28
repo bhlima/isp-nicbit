@@ -169,9 +169,9 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('invoices', 'Auth\InvoicesController::invoices'); // new
     $routes->post('invoices/update', 'Auth\InvoicesController::invoicesUpdate'); // new
 
-
-
-
+    // Areas
+    $routes->get('areas', 'Auth\AreasController::areas'); // new
+    
 
     $routes->get('clients/delete/(:num)', 'Auth\ClientsController::delete'); // new
     $routes->post('clients/create', 'Auth\ClientsController::create');
