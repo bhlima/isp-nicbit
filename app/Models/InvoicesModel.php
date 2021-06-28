@@ -9,7 +9,7 @@ class InvoicesModel extends Model
 	protected $returnType = 'array';
 	protected $useSoftDeletes = false;
 	protected $allowedFields = [
-		'user_id', 'date', 'status_id', 'tipo_id', 'obs', 
+		'user_id', 'date', 'duedate', 'status_id', 'tipo_id', 'obs', 
 		'created_at', 'updated_at', 'created_by'
     	];
 

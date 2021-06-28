@@ -17,7 +17,7 @@
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Faturas Open</h5>
+            <h5 class="card-title">Aguardando Pagamento</h5>
             <h3 class="card-text"> 0  </h3>
           </div>
         </div>
@@ -25,7 +25,7 @@
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Faturas Close</h5>
+            <h5 class="card-title">Faturas Pagas</h5>
             <h3 class="card-text"> 0</h3>
           </div>
         </div>
@@ -35,7 +35,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
         <h1 class="h2">Faturas</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#creategatewayformmodal"><i class="fas fa-user-plus"></i> Adicionar gateway</button>
+            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#creategatewayformmodal"><i class="fas fa-user-plus"></i> Criar uma fatura</button>
         </div>
     </div>
 
@@ -45,9 +45,10 @@
             data-order='[[ 0, "asc" ]]'>
                 <thead>
                     <tr>
-                        <th>User_id</th>
-                        <th>Criada em</th>
-                        <th>Atributo</th>
+                        <th>#</th>
+                        <th>Cliente</th>
+                        <th>Gerada</th>
+                        <th>Vencimento</th>
                         <th>Status</th>
                         <th>Tipo</th>
                         <th></th>
@@ -56,14 +57,16 @@
                 <tbody>
                     <?php foreach ($data as $item):?>
                     <tr>
+                        <td><?= $item['id'] ?></td>
                         <td><?= $item['user_id'] ?></td>
                         <td><?= $item['date'] ?></td>
+                        <td><?= $item['duedate'] ?></td>
                         <td><?= $item['status_id'] ?></td>
                         <td><?= $item['tipo_id'] ?></td>
 
                         <td class="text-right">
-                            <a class="btn btn-outline-secondary btn-sm" href="<?= site_url('groupsc/edit/').$item['id'] ?>"><i class="fas fa-edit"></i></a>
-                            <a class="btn btn-outline-secondary btn-sm" href="<?= site_url('groupsc/delete/').$item['id'] ?>"><i class="fas fa-trash"></i></a>
+                            <a class="btn btn-outline-secondary btn-sm" href="<?= site_url('invoices/edit/').$item['id'] ?>"><i class="fas fa-edit"></i></a>
+                            <a class="btn btn-outline-secondary btn-sm" href="<?= site_url('invoices/delete/').$item['id'] ?>"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php endforeach;?>

@@ -74,6 +74,7 @@ class InvoicesController extends Controller
 		$invoice = [
 			'user_id' 		=> $this->request->getPost('user_id'),
 			'date' 			=> $this->request->getPost('date'),
+			'duedate' 			=> $this->request->getPost('date'),
 			'status_id' 	=> $this->request->getPost('status_id'),
 			'tipo_id' 		=> $this->request->getPost('tipo_id'),
 			'obs' 			=> $this->request->getPost('obs'),

@@ -17,13 +17,6 @@
         <?= $data ?>
     </select>
 
-    <select class="js-example-basic-single" name="state">
-  <option value="AL">Alabama</option>
-    ...
-  <option value="WY">Wyoming</option>
-</select>
-
-
     <hr>
 
 <button name="getattibute" class="btn btn-primary shadow-2 mb-4">Ver os atrributos</button>
