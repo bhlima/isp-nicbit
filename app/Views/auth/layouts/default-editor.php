@@ -36,7 +36,7 @@
 
 <body class="bg-light">
     <!-- navbar -->
-    <?= view('App\Views\auth\components\navbar') ?>
+    <?= view('App\Views\auth\components\navbar2') ?>
 
     <main role="main" class="container">
       <!-- notifications -->

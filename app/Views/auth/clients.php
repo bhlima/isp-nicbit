@@ -25,8 +25,8 @@
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Novos contratos</h5>
-            <h3 class="card-text"> <span class="text-small text-muted">(nos últimos 30 dias)</span></h3>
+            <h5 class="card-title">Clientes ativos</h5>
+            <h3 class="card-text"> <?= $activeusers ?></span></h3>
           </div>
         </div>
       </div>

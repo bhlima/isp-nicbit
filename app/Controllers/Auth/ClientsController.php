@@ -89,7 +89,11 @@ class ClientsController extends Controller
 		// load user models
 		$info 	 = new CliinfoModel();
 		$clients = new ClientsModel();
-		
+		$radius = new RadacctModel();
+
+		$activeusers = $radius->where('acctstoptime', NULL)->countAllResults(); 
+
+
 		// Load all clients and all info joined
 		
 		$allclients = $info->findAll(); 
@@ -108,6 +112,7 @@ class ClientsController extends Controller
 				'data' => $allclients, 
 				'clientscount' => $countclients, 
 				'countClientsIncompletos' => $countClientsIncompletos, 
+				'activeusers' => $activeusers,
 			]);
 	}
 

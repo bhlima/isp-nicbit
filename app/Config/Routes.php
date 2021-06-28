@@ -173,6 +173,11 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('areas', 'Auth\AreasController::areas'); // new
     
 
+    // Installs
+    $routes->get('installs', 'Auth\InstallController::installs'); // new
+
+
+
     $routes->get('clients/delete/(:num)', 'Auth\ClientsController::delete'); // new
     $routes->post('clients/create', 'Auth\ClientsController::create');
     $routes->get('clients/perfil/(:any)', 'Auth\ClientsController::clientperfil');

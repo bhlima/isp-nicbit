@@ -53,36 +53,16 @@ use Radius;
 class AccountController extends Controller
 {
 
-
-
-
-	/**
-	 * Access to current session.
-	 *
-	 * @var \CodeIgniter\Session\Session
-	 */
 	protected $session;
-
-	/**
-	 * Authentication settings. teste
-	 */
 	protected $config;
 
 
-    //--------------------------------------------------------------------
-
 	public function __construct()
 	{
-		// start session
 		$this->session = Services::session();
 
 	}
 
-    //--------------------------------------------------------------------
-
-	/**
-	 * Displays account settings.
-	 */
         
 	public function dashboard()
 	{
@@ -97,17 +77,11 @@ class AccountController extends Controller
 		$radius = new RadacctModel();
 		$linfo = new LinuxInfo();
 
-
-		//Recupera o tempo que o servidor esta no ar
 		$temponoar = $linfo->uptime();
-
-		// get all user logs
 		$activeusers = $radius->where('acctstoptime', NULL)->countAllResults(); 
 
         $radcheck = new RadcheckModel();
         $radacct  = new RadacctModel();
-
-		
 
 
 		$totalclientes = $radcheck->countAll(); 
@@ -116,12 +90,7 @@ class AccountController extends Controller
 			return redirect()->route('login');
 		}
 
-
-
-		//$builder = $radcheck->table('radacct');
-
 		$db = \Config\Database::connect();
-
 
 		$query = array();
 		$query  = $radcheck->query('select day(acctupdatetime) as time, sum(acctoutputoctets) as output, 
@@ -138,7 +107,6 @@ class AccountController extends Controller
 			$plabels .= ',';
 		}
 				
-		//Monta a o array padrao gráfico
 		$plabels = rtrim($plabels, ',');
 		$plabels .= ']';
 		$row = '';
@@ -156,7 +124,6 @@ class AccountController extends Controller
 
 		}
 				
-		//Monta a o array padrao gráfico
 		$grafico1 = rtrim($grafico1, ',');
 		$grafico1 .= ']';
 	
@@ -167,8 +134,7 @@ class AccountController extends Controller
 		$grafico3 .= ']';
 
 
-		//print_r($grafico1);print_r($grafico2);exit;
-		
+
 		return view('auth/starter', [
 			'userData' => $this->session->userData,
 			'activeusers' => $activeusers,
@@ -183,11 +149,6 @@ class AccountController extends Controller
 	}
 
 
-	//--------------------------------------------------------------------
-
-	/**
-	 * Displays profile page.
-	 */
 	public function profile()
 	{
 		if (! $this->session->isLoggedIn) {
@@ -199,14 +160,9 @@ class AccountController extends Controller
 		]);
 	}
 	
-	//--------------------------------------------------------------------
 
-	/**
-	 * Updates regular account settings.
-	 */
 	public function updateProfile()
 	{
-		// update user, validation happens in model
 		$users = new UserModel();
 		$getRule = $users->getRule('updateProfile');
 		$users->setValidationRules($getRule);
@@ -223,17 +179,12 @@ class AccountController extends Controller
 			return redirect()->back()->withInput()->with('errors', $users->errors());
         }
 
-        // update session data
         $this->session->push('userData', $user);
 
         return redirect()->route('profile')->with('success', lang('Auth.updateSuccess'));
 	}
 
-    //--------------------------------------------------------------------
 
-	/**
-	 * Updates regular account settings.
-	 */
 	public function updateAccount()
 	{
 		// update user, validation happens in model
