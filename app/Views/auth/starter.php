@@ -7,52 +7,55 @@
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Total de clientes</h5>
+            <h5 class="card-title">Clientes cadastrados</h5>
             <h3 class="card-text"><?= $totalusers ?></h3>
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Clientes OnLine</h5>
-            <h3 class="card-text"><?= $activeusers ?></h3>
 
-          </div>
-        </div>
-      </div>
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Uptime</h5>
-            <h4 class="card-text"><?= $uptime ?></h4>
+            <h5 class="card-title">Clientes Online</h5>
+            <h4 class="card-text"><?= $activeusers ?></h4>
           </div>
         </div>
       </div>
+
+
+      <div class="col-sm-4">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Total de contratos</h5>
+            <h3 class="card-text">0<?//= $totalcontracts ?></h3>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="row">
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Tráfego Ontem</h5>
-            <h3 class="card-text">13</h3>
+            <h5 class="card-title">Tempo no ar</h5>
+            <h3 class="card-text"><?= $uptime ?></h3>
           </div>
         </div>
       </div>
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Tráfego Hoje</h5>
-            <h3 class="card-text"> R$ 220,00</h3>
+            <h5 class="card-title">Download Hoje</h5>
+            <h3 class="card-text"><?= $totaldownload ?></h3>
           </div>
         </div>
       </div>
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Pagamentos em 30 dias</h5>
-            <h3 class="card-text">R$ 785,00</h3>
+            <h5 class="card-title">Upload Hoje</h5>
+            <h3 class="card-text"><?= $totalupload ?></h3>
           </div>
         </div>
       </div>
@@ -62,7 +65,7 @@
         <div class="card mt-3">
           <div class="card-body">
             <h5 class="card-title">Logins Hoje</h5>
-            <h3 class="card-text">2</h3>
+            <h3 class="card-text"><?= $logins ?></h3>
           </div>
         </div>
       </div>
@@ -70,7 +73,7 @@
         <div class="card mt-3">
           <div class="card-body">
             <h5 class="card-title">Falha na NAS</h5>
-            <h3 class="card-text"> 1</h3>
+            <h3 class="card-text">0</h3>
           </div>
         </div>
       </div>
@@ -85,15 +88,6 @@
       </div>
     </div>
 
-    <div class="row">
-  <div class="col-sm-8">col-sm-8</div>
-  <div class="col-sm-4">col-sm-4</div>
-</div>
-<div class="row">
-  <div class="col-sm">col-sm</div>
-  <div class="col-sm">col-sm</div>
-  <div class="col-sm">col-sm</div>
-</div>
 
 
 

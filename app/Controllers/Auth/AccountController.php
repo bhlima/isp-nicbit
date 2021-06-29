@@ -43,6 +43,7 @@ use Config\Services;
 use App\Models\UserModel;
 use App\Models\RadacctModel;
 use App\Models\RadcheckModel;
+use App\Models\SetModel;
 USE LinuxInfo;
 use RouterosAPI;
 use Radius;
@@ -72,16 +73,41 @@ class AccountController extends Controller
 			return redirect()->route('login');
 		}
 
-		
 		$RadiusOB = new Radius();
 		$radius = new RadacctModel();
 		$linfo = new LinuxInfo();
+		$set   = new SetModel();
+
+
+		$language = $set->getset('language');
+		$radaccttable = $set->getset('radacct');
+
+		
+		// echo $language->value;exit;
 
 		$temponoar = $linfo->uptime();
 		$activeusers = $radius->where('acctstoptime', NULL)->countAllResults(); 
 
         $radcheck = new RadcheckModel();
         $radacct  = new RadacctModel();
+
+		$this->db = \Config\Database::connect();
+
+		$query = array();
+		$query  = $this->db->query('SELECT sum(acctoutputoctets) as download, sum(acctinputoctets) as upload FROM radacct WHERE DATE_FORMAT(acctstoptime, "%Y-%m-%d") = CURDATE();');
+		
+		$query2  = $this->db->query('SELECT * FROM radacct WHERE DATE_FORMAT(acctstarttime, "%Y-%m-%d") = CURDATE();');
+
+		$r =  0;// $this->db->count_all_results();
+
+		$q = $query->Getrow();
+							
+		$totdownload 	= $this->toxbyte($q->download);
+		$totupload 		= $this->toxbyte($q->upload);
+		$logins			= $r;
+
+
+
 
 
 		$totalclientes = $radcheck->countAll(); 
@@ -93,9 +119,9 @@ class AccountController extends Controller
 		$db = \Config\Database::connect();
 
 		$query = array();
-		$query  = $radcheck->query('select day(acctupdatetime) as time, sum(acctoutputoctets) as output, 
+		$query  = $radacct->query("SELECT day(acctupdatetime) as time, sum(acctoutputoctets) as output, 
 							sum(acctinputoctets) as input from radacct group by day(acctupdatetime), 
-							month(acctupdatetime) order by month(acctupdatetime), day(acctupdatetime);');
+							month(acctupdatetime) order by month(acctupdatetime), day(acctupdatetime);");
 		$plabels 	= '[';
 		$grafico1	= '[';
 		$grafico2 	= '[';
@@ -136,14 +162,19 @@ class AccountController extends Controller
 
 
 		return view('auth/starter', [
-			'userData' => $this->session->userData,
-			'activeusers' => $activeusers,
-			'totalusers' => $totalclientes,
-			'uptime'     => $temponoar,
-			'labels'	 => $plabels,
-			'grafico1'	 => $grafico1,
-			'grafico2'	 => $grafico2,
-			'grafico3'	 => $grafico3,
+			'userData' 		=> $this->session->userData,
+			'activeusers' 	=> $activeusers,
+			'totalusers' 	=> $totalclientes,
+			'uptime'     	=> $temponoar,
+			'labels'	 	=> $plabels,
+			'grafico1'	 	=> $grafico1,
+			'grafico2'	 	=> $grafico2,
+			'grafico3'	 	=> $grafico3,
+			'totalupload' 	=> $totupload,
+			'totaldownload' => $totdownload,
+			'logins' 	=> $logins
+
+
 
 		]);
 	}

@@ -2,35 +2,8 @@
 <?= $this->section('modals') ?>
     <?= view('App\Views\auth\modals\add-groupc') ?>
 <?= $this->endSection() ?>
-
 <?= $this->section('main') ?>
 
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Total de Grupos</h5>
-            <h3 class="card-text"><?= $totalgroups ?></h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Grupos nos contratos</h5>
-            <h3 class="card-text"> 44  </h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">Autenticações hoje</h5>
-            <h3 class="card-text"> 64</h3>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
         <h1 class="h2">Gateways</h1>

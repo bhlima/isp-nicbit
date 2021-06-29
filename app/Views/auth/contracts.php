@@ -13,8 +13,16 @@
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Clientes ativos</h5>
-            <h3 class="card-text"></h3>
+            <h5 class="card-title">Clientes contratados</h5>
+            <h3 class="card-text">0</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Clientes sem contrato</h5>
+            <h3 class="card-text">0</h3>
           </div>
         </div>
       </div>
