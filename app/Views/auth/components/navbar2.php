@@ -54,7 +54,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="invoices">Gerenciar Faturas</a>
-                    <a class="dropdown-item" href="#">Transações</a>
+                    <a class="dropdown-item" href="transactions">Extrato Financeiro</a>
                 </div>
             </li>               
                     
