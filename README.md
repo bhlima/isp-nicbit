@@ -56,7 +56,7 @@ encontra os nodos de desenvolvimento, verifique os commits do repositório.
 ## Patrocinar o Projeto
 >Tenha seu nome incluido na lista de patrocinadores oficial do sistema, caso necessite de uma biblioteca particular para seus sistema financeiro com doações poderemos incui-la no projeto MAster.
 
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-				
 <a href="https://pag.ae/7XhdLW9M3"><img src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/120x53-doar.gif"></a>
 
