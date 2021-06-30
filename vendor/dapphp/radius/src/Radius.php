@@ -61,7 +61,6 @@
  * @link drew@drew-phillips.com
  */
 
- 
 namespace Dapphp\Radius;
 
 /**

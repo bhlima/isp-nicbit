@@ -39,7 +39,7 @@
         <div class="card mt-3">
           <div class="card-body">
             <h5 class="card-title">Tempo no ar</h5>
-            <h3 class="card-text"><?= $uptime ?></h3>
+            <h4 class="card-text"><?= $uptime ?></h4>
           </div>
         </div>
       </div>
