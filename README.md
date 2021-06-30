@@ -60,3 +60,15 @@ encontra os nodos de desenvolvimento, verifique os commits do repositório.
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <a href="https://pag.ae/7XhdLW9M3"><img src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/120x53-doar.gif"></a>
 
+
+## Relacionado
+
+* [PagSeguro](https://pagseguro.com.br/)
+* [Gerencianet](https://gerencianet.com.r/)
+* [Freeradius](http://freeradius.com/)
+* [Mikrotik](https://mikrotik.com/)
+
+
+## License
+
+* [MIT](https://github.com/bhlima/isp-nicbit/blob/master/LICENSE)
