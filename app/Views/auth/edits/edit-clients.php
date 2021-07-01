@@ -55,14 +55,16 @@
             <div class="form-group row">
             <div class="col">
                 <label for="estado">Estado</label>
-                <select>
+                <select name='estado' id='estados' class="form-control form-control-sm">
+                <option selected><?= $optionsselectedestados ?></options>
                 <?= $estados ?>   
                 </select>
             </div>
             <div class="col">
                 <label for="cidade">Cidade</label>
-                <input class="form-control form-control-sm" type="text" name="cidade" 
-                  value="<?= $data['cidade'] ?>" />
+                <select name='cidade' id='cidades' class="form-control form-control-sm">
+                <option selected><?= $data['cidade'] ?></options>
+                </select>
             </div>
 
             <div class="col">
@@ -97,11 +99,9 @@
                 <input class="form-control form-control-sm" type="text" name="cnpj" 
                 value="<?= $data['cnpj'] ?>" />
             </div>
-
             </div>
-
+            
             <div class="form-group row">
-
             <div class="col">
                 <label for="email">email</label>
                 <input class="form-control form-control-sm" type="text" name="email" 

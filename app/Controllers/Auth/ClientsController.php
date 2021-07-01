@@ -136,10 +136,13 @@ class ClientsController extends Controller
 
 
 		// get States from address info
-		$options = $this->getEstados();
+		$optionsestados = $this->getEstados();
+		$optionsestadosselected = $userinfo['estado'];		
 		
-		$optionsc = $this->getMunicipios('SP');
-
+		
+		
+		
+		//$optionsc = $this->getMunicipios('SP');
 		//echo '<pre>';
 		//print_r($optionsc); exit;
 
@@ -147,7 +150,8 @@ class ClientsController extends Controller
 		return view('auth/edits/edit-clients', [
 				'userData' => $this->session->userData, 
 				'data' => $userinfo,
-				'estados' => $options
+				'estados' => $optionsestados,
+				'optionsselectedestados' => $optionsestadosselected
 			]);
 	}
 

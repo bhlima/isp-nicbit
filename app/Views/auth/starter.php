@@ -22,12 +22,11 @@
         </div>
       </div>
 
-
-      <div class="col-sm-4">
+       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
             <h5 class="card-title">Total de contratos</h5>
-            <h3 class="card-text">0<?//= $totalcontracts ?></h3>
+            <h3 class="card-text"><?= $totcontratos ?></h3>
           </div>
         </div>
       </div>
@@ -82,21 +81,18 @@
           <div class="card-body">
             <h5 class="card-title">Status do Radius</h5>
             <h5 class="card-text"><?= shell_exec('/etc/init.d/freeradius status | grep Status'); ?>
-</h5>
+          </h5>
           </div>
         </div>
       </div>
     </div>
-
-
-
 
  <!-- Gráficos -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
       var ctx = document.getElementById("myChart");
       var myChart = new Chart(ctx, {
-        type: 'line',
+        type: '<?= $graphtypedashboard ?>',
         data: {
           labels: <?= $labels?>,
           datasets: [
@@ -165,12 +161,4 @@
         }
       });
     </script>
-
-
-
-
-
-
-
-
 <?= $this->endSection() ?>

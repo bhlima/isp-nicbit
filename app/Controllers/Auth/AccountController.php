@@ -36,11 +36,12 @@ namespace App\Controllers\Auth;
  * @filesource
  */
 
-
+use App\Models\ContractModel;
 use CodeIgniter\Controller;
 use Config\Email;
 use Config\Services;
 use App\Models\UserModel;
+use App\Models\ContractsModel;
 use App\Models\RadacctModel;
 use App\Models\RadcheckModel;
 use App\Models\SetModel;
@@ -73,18 +74,22 @@ class AccountController extends Controller
 			return redirect()->route('login');
 		}
 
-		$RadiusOB = new Radius();
-		$radius = new RadacctModel();
-		$linfo = new LinuxInfo();
-		$set   = new SetModel();
+		$RadiusOB 	= new Radius();
+		$radius 	= new RadacctModel();
+		$linfo 		= new LinuxInfo();
+		$set   		= new SetModel();
+		$contracts  = new ContractModel();
 
 
 		$language = $set->getset('language');
+		$graphtypedashboard = $set->getset('graphtypedashboard');
 		$radaccttable = $set->getset('radacct');
 
 		
-		// echo $language->value;exit;
+		//echo $graphtypedashboard->value;exit;
 
+
+		$totcontratos = $contracts->countAllResults();
 		$temponoar = $linfo->uptime();
 		$activeusers = $radius->where('acctstoptime', NULL)->countAllResults(); 
 
@@ -105,8 +110,6 @@ class AccountController extends Controller
 		$totdownload 	= $this->toxbyte($q->download);
 		$totupload 		= $this->toxbyte($q->upload);
 		$logins			= $r;
-
-
 
 
 
@@ -160,7 +163,6 @@ class AccountController extends Controller
 		$grafico3 .= ']';
 
 
-
 		return view('auth/starter', [
 			'userData' 		=> $this->session->userData,
 			'activeusers' 	=> $activeusers,
@@ -172,9 +174,9 @@ class AccountController extends Controller
 			'grafico3'	 	=> $grafico3,
 			'totalupload' 	=> $totupload,
 			'totaldownload' => $totdownload,
-			'logins' 	=> $logins
-
-
+			'logins' 		=> $logins,
+			'totcontratos' 	=> $totcontratos,
+			'graphtypedashboard' => $graphtypedashboard->value,
 
 		]);
 	}
