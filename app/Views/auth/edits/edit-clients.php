@@ -37,7 +37,6 @@
             </div>
             </div>
 
-
             <div class="form-group row">
 
             <div class="col">
@@ -54,20 +53,17 @@
             </div>
 
             <div class="form-group row">
-
-
             <div class="col">
                 <label for="estado">Estado</label>
-                <input class="form-control form-control-sm" type="text" name="estado" 
-                  value="<?= $data['estado'] ?>" />
+                <select>
+                <?= $estados ?>   
+                </select>
             </div>
             <div class="col">
                 <label for="cidade">Cidade</label>
                 <input class="form-control form-control-sm" type="text" name="cidade" 
                   value="<?= $data['cidade'] ?>" />
             </div>
-
-
 
             <div class="col">
                 <label for="cep">CEP</label>
@@ -88,8 +84,6 @@
                   value="<?= $data['referencia'] ?>" />
             </div>
 
-
-
             <div class="form-group row">
 
             <div class="col">
@@ -97,7 +91,6 @@
                 <input class="form-control form-control-sm" type="text" name="empresa" 
                   value="<?= $data['empresa'] ?>" />
             </div>
-
 
             <div class="col">
                 <label for="cnpj">Cnpj</label>
@@ -107,9 +100,7 @@
 
             </div>
 
-
             <div class="form-group row">
-
 
             <div class="col">
                 <label for="email">email</label>
@@ -154,7 +145,6 @@
             </div>
 
 </div>
-
 
         </form>
     </div>

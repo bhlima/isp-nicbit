@@ -138,17 +138,16 @@ class ClientsController extends Controller
 		// get States from address info
 		$options = $this->getEstados();
 		
-		$optionsC = $this->getMunicipios('SP');
+		$optionsc = $this->getMunicipios('SP');
 
-
-		echo '<pre>';
-		print_r($optionsC); exit;
+		//echo '<pre>';
+		//print_r($optionsc); exit;
 
 		// load the view with session data
 		return view('auth/edits/edit-clients', [
 				'userData' => $this->session->userData, 
 				'data' => $userinfo,
-				'options' => $options
+				'estados' => $options
 			]);
 	}
 
@@ -407,28 +406,44 @@ if (! $clients->save($client ) )  {
 	public function getEstados() {
 
 		$estados = new EstadosModel();
-		$options = $estados->findAll();
+		$array	= $estados->findAll();
+        $options ="<option value = '' > Escolha o Estado </options>";
 
+		foreach ($array as $estado) {
+            $options .= "<option value='" . $estado['Nome'] . "'>" . $estado['Nome'] . "</option>" . PHP_EOL;
+		}
 		return $options;
-
 	}
 
-	public function getMunicipios($uf) {
 
-			$municipios  = new MunicipiosModel();
-			$m = $municipios->where('Uf', $uf);
-			$options ="<option value = '' > Escolha a cidade </options>";
-	
-			//echo "<pre>";
-			//print_r($m);exit;
+    public function getMunicipios($uf)
+    {
 
-			foreach ($m as $cidade)      
-			{
-				$options .= "<option value='" . $cidade['Nome'] . "'>" . $cidade->nome. "</option>" . PHP_EOL;
-			}
-			return $options;
-	
-	}
+		$query = "select * from Municipio where Uf = '". $uf ."'";
+
+		//echo $query;exit;
+
+		$municipios  = new MunicipiosModel();
+        $m = $municipios->query($query);
+        $row = $m->getResult();
+        $options ="<option value = '' > Escolha a cidade </options>";
+
+		//echo "</pre>";print_r($row);exit;
+
+        foreach ($row as $municipio)      
+        {
+            $options .= "<option value='" . $municipio->Nome . "'>" . $municipio->Nome . "</option>" . PHP_EOL;
+        }
+        return $options;
+
+    }
+
+
+
+
+
+
+
 
 
 	public function clientperfil() {
