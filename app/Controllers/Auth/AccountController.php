@@ -74,7 +74,6 @@ class AccountController extends Controller
 			return redirect()->route('login');
 		}
 
-		$RadiusOB 	= new Radius();
 		$radius 	= new RadacctModel();
 		$linfo 		= new LinuxInfo();
 		$set   		= new SetModel();

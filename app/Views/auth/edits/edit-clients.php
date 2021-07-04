@@ -1,5 +1,7 @@
 <!-- load main layout -->
-<?= $this->extend('auth/layouts/default') ?>
+<?= $this->extend('auth/layouts/default-table-ajax') ?>
+
+
 
 <!-- load main content -->
 <?= $this->section('main') ?>
@@ -27,53 +29,63 @@
             </div>
             <div class="col">
                 <label for="cpf">CPF</label>
-                <input class="form-control form-control-sm" type="text" name="cpf" 
-                  value="<?= $data['cpf'] ?>" />
+                  <input class="form-control form-control-sm" type="text" id="cpf" value="<?= $data['cpf'] ?>" name="cpf" onkeydown="javascript: fMasc( this, mCPF );">
             </div>
             <div class="col">
                 <label for="aniversario">Data de Nascimento</label>
-                <input class="form-control form-control-sm" type="text" name="aniversario" 
+                <input class="form-control form-control-sm" type="text" id="datepicker" name="aniversario" 
                   value="<?= $data['aniversario'] ?>" />
             </div>
             </div>
 
-            <div class="form-group row">
-
-            <div class="col">
-                <label for="endereco">Endereço</label>
-                <input class="form-control form-control-sm" type="text" name="endereco" 
-                  value="<?= $data['endereco'] ?>" />
-            </div>
-            <div class="col">
-                <label for="bairro">Bairro</label>
-                <input class="form-control form-control-sm" type="text" name="bairro" 
-                  value="<?= $data['bairro'] ?>" />
-            </div>
-
-            </div>
 
             <div class="form-group row">
-            <div class="col">
-                <label for="estado">Estado</label>
-                <select name='estado' id='estados' class="form-control form-control-sm">
+                        <div class="col">
+                <label for="estados">Estado</label>
+                <select name='estados' id='estados' class="form-control form-control-sm">
                 <option selected><?= $optionsselectedestados ?></options>
                 <?= $estados ?>   
                 </select>
             </div>
             <div class="col">
                 <label for="cidade">Cidade</label>
-                <select name='cidade' id='cidades' class="form-control form-control-sm">
-                <option selected><?= $data['cidade'] ?></options>
-                </select>
+                <select name='cidades' id='cidades' class="form-control form-control-sm">
+                <option><?= $data['cidade'] ?></option>
+                </select> 
             </div>
+
+            <div class="col">
+                <label for="bairro">Bairro</label>
+                <input class="form-control form-control-sm" type="text" name="bairro" 
+                  value="<?= $data['bairro'] ?>" />
+            </div>
+
+
+            </div>
+
+            <div class="form-group row">
 
             <div class="col">
                 <label for="cep">CEP</label>
                 <input class="form-control form-control-sm" type="text" name="cep" 
                   value="<?= $data['cep'] ?>" />
             </div>
+
+
             <div class="col">
-                <label for="localidadeatt">Localidade da contratação</label>
+                <label for="endereco">Endereço</label>
+                <input class="form-control form-control-sm" type="text" name="endereco" 
+                  value="<?= $data['endereco'] ?>" />
+            </div>
+
+
+            </div>
+
+            <div class="form-group row">
+
+
+            <div class="col">
+                <label for="localidadeatt">Região da Instalação</label>
                 <input class="form-control form-control-sm" type="text" name="localidadeatt" 
                   value="<?= $data['localidadeatt'] ?>" />
             </div>
@@ -140,8 +152,7 @@
             <div class="text-right">
                 <input name="username" type="hidden" value="<?= $data['username'] ?>" readonly/>
                 <input name="id" type="hidden" value="<?= $data['id'] ?>" readonly/>
-
-                <button type="submit" class="btn btn-primary" name="Button"><i class="fas fa-check-circle"></i> Update</button>
+                <button type="submit" class="btn btn-primary" name="Button"><i class="fas fa-check-circle"></i> Gravar mudanças</button>
             </div>
 
 </div>

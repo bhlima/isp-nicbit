@@ -38,7 +38,6 @@
       <?= $this->renderSection('main') ?>
     </main>
 
-    <script src="<?= base_url("vendor/select2/dist/js/select2.full.min.js") ?>" type="text/javascript"></script>
     <script src="<?= base_url("vendor/jquery/jquery.min.js") ?>" type="text/javascript"></script>
     <script src="<?= base_url("vendor/bootstrap/js/bootstrap.bundle.min.js") ?>" type="text/javascript"></script>
     <!-- load extended scripts -->

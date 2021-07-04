@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
@@ -46,8 +46,21 @@
 
     <!-- inline js code -->
     <script type="text/javascript">
-        $('#dataTables-table').DataTable({responsive: true,pageLength: 10,lengthChange: false,searching: true,ordering: true});
-    </script>
+        $('#dataTables-table').DataTable({
+            "language": {
+          "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+      },
+            responsive: true,
+            pageLength: 10,
+            lengthChange: false,
+            searching: true,
+            ordering: true});
+ 
+ 
+ </script>
+
+
+
 
    
     <!-- load extended scripts -->

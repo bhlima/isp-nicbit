@@ -59,7 +59,7 @@ class AreasController extends Controller
 	}
 
         
-	public function Areas()
+	public function areas()
 	{
 
 		if (! $this->session->isLoggedIn) {

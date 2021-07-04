@@ -43,7 +43,7 @@ return [
     'areYouSure'                => 'Tem certeza?',
 
     // Error and success
-    'passwordMismatch'          => 'The passwords must match!',
+    'passwordMismatch'          => 'As senhas precisam ser idêncticas!',
     'registrationSuccess'       => 'Success! Please activate your account by clicking the activation link in the e-mail we have sent!',
     'activationNoUser'          => 'There is no user with this activation code.',
     'activationSuccess'         => 'Successful activation! Now you can login to your account!',

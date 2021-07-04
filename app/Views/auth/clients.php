@@ -10,9 +10,8 @@
 <?= $this->endSection() ?>
 
 <!-- load main content -->
-<?= $this->section('main'); 
+<?= $this->section('main');?>
 
-?>
     <div class="row">
       <div class="col-sm-4">
         <div class="card mt-3">
@@ -33,7 +32,7 @@
       <div class="col-sm-4">
         <div class="card mt-3">
           <div class="card-body">
-            <h5 class="card-title">Indigentes</h5>
+            <h5 class="card-title">Cadastros incompletos</h5>
             <h3 class="card-text"><?= $countClientsIncompletos ?></h3>
           </div>
         </div>

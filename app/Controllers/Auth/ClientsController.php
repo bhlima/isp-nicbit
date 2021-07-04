@@ -98,10 +98,9 @@ class ClientsController extends Controller
 		
 		$allclients = $info->findAll(); 
 
-		$countClientsIncompletos = $info->where('telefone1','00 00000 0000')->countAll();
+		$countClientsIncompletos = $info->where('cpf', '')->countAllResults(); 
 
 		//echo '<pre>';
-		//print_r($allclients);exit;
 
 		// count all rows in users table
 		$countclients = $clients->countAll(); 
@@ -206,8 +205,8 @@ class ClientsController extends Controller
             'id'      	    				=> $this->request->getPost('id'),
 			'usename'  	    				=> $this->request->getPost('username'),
 			'changeuserinfo' 				=> $this->request->getPost('changeuserinfo'),
-			'cidade'        				=> $this->request->getPost('cidade'),
-			'estado'      					=> $this->request->getPost('estado'),
+			'cidade'        				=> $this->request->getPost('cidades'),
+			'estado'      					=> $this->request->getPost('estados'),
             'endereco'      	    		=> $this->request->getPost('endereco'),
 			'bairro'  	    				=> $this->request->getPost('bairro'),
 			'referencia' 					=> $this->request->getPost('referencia'),
@@ -376,34 +375,6 @@ if (! $clients->save($client ) )  {
 	
 	}
 
-	public function handleajaxrequest()
-	{
-	
-		$data = $this->request->uri->getSegment(3);
-
-
-		header('Access-Control-Allow-Origin: *');
-		header('Access-Control-Allow-Credentials: true');
-		header('Access-Control-Max-Age: 604800');
-		header("Content-type: application/json");
-
-			echo json_encode(array(
-				'status' => 1,
-				'message' => 'Successful request nicbit',
-				'data'	=> $data
-			));
-
-
-
-	}
-
-
-	public function ajaxRequest()
-	{
-
-		return view('ajax-request2');
-	}
-
 
 
 
@@ -414,14 +385,18 @@ if (! $clients->save($client ) )  {
         $options ="<option value = '' > Escolha o Estado </options>";
 
 		foreach ($array as $estado) {
-            $options .= "<option value='" . $estado['Nome'] . "'>" . $estado['Nome'] . "</option>" . PHP_EOL;
+            $options .= "<option value='" . $estado['Uf'] . "'>" . $estado['Nome'] . "</option>" . PHP_EOL;
 		}
 		return $options;
 	}
 
 
-    public function getMunicipios($uf)
+    public function getMunicipios()
     {
+
+
+		$uf = $this->request->uri->getSegment(3);
+
 
 		$query = "select * from Municipio where Uf = '". $uf ."'";
 

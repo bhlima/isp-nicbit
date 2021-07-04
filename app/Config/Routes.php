@@ -187,8 +187,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('clients/perfil/(:any)', 'Auth\ClientsController::clientperfil');
 
     //Ajax teste bet
-    $routes->get('clients/ajax', 'Auth\ClientsController::ajaxRequest');
-    $routes->get('clients/handle-myajax/(:any)', 'Auth\ClientsController::handleajaxrequest');
+    $routes->get('clients/getM/(:any)', 'Auth\ClientsController::getMunicipios');
 
 
 
