@@ -39,7 +39,7 @@ namespace App\Controllers\Auth;
 use CodeIgniter\Controller;
 use Config\Services;
 use App\Models\AreasModel;
-
+use App\Models\SubareasModel;
 class AreasController extends Controller
 {
 
@@ -73,38 +73,111 @@ class AreasController extends Controller
 	}
 
 
+    public function create() {
+		if (! $this->session->isLoggedIn) {
+			return redirect()->route('login');
+		}
+
+        //Inicializa models
+		$areas = new AreasModel();
+
+		//Captura dados
+		$getRule = $areas->getRule('cadastro');
+		$areas->setValidationRules($getRule);
+
+        $area = [
+            'groupareas' => $this->request->getPost('groupareas'),
+            'subgroup' => $this->request->getPost('subgroup'),
+
+        ];
+        
+        if (! $areas->save($area))  {
+            return redirect()->route('areas')->with('error', 'Algo esta errado!');
+        }
+
+        return redirect()->route('areas')->with('success', 'ok! Tudo certo mano!');
+    }
+
+
+    public function precreatesub() {
+		if (! $this->session->isLoggedIn) {
+			return redirect()->route('login');
+		}
+
+        $id_grouparea = $this->request->uri->getSegment(3);
+
+        return view('auth/add-subgrouparea', [
+			'userData'      => $this->session->userData,
+            'id_grouparea'  => $id_grouparea	
+
+		]);
+    }
+
+
+
+
+
+    public function createsub() {
+		if (! $this->session->isLoggedIn) {
+			return redirect()->route('login');
+		}
+
+        //Inicializa models
+		$subareas = new SubareasModel();
+
+		//Captura dados
+		$getRule = $subareas->getRule('cadastro');
+		$subareas->setValidationRules($getRule);
+
+        $subarea = [
+            'groupareas' => $this->request->getPost('groupareas'),
+            'groupareas' => $this->request->getPost('groupareas'),
+        ];
+        
+        if (! $subareas->save($subarea))  {
+            return redirect()->route('areas')->with('error', 'Algo esta errado!');
+        }
+
+        return redirect()->route('areas')->with('success', 'ok! Tudo certo mano!');
+    }
+
+
+
     public function getgroupareas()
     {
 
         $areas  = new AreasModel();
-        $groups = $areas->query('select distinct groupareas from areas');
+        $groups = $areas->query('select * from areas');
         $row = $groups->getResult();
         $options ="<option value = '' > Escolha o Grupo </options>";
 
         foreach ($row as $group)      
         {
-            $options .= "<option value='" . $group->vendor . "'>" . $group->vendor . "</option>" . PHP_EOL;
+            $options .= "<option value='" . $group->id . "'>" . $group->groupareas . "</option>" . PHP_EOL;
         }
         return $options;
 
     }
 
 
-
-    public function getareas()
+    public function subgrouparea()
     {
-        $group = $this->request->getPost('groupareas');
-        $dics  = new AreasModel();
-        $data = $dics->where('group', $group)
+        $id_grouparea = $this->request->getPost('groupareas');
+
+        //echo $id_grouparea;exit;
+
+        $subareas  = new SubareasModel();
+        $data = $subareas->where('id_grouparea', $id_grouparea)
                      ->findall();
+
+      //dd(print_r($data));exit;
 
                      return view('auth/areassubgroups', [
                         'userData' => $this->session->userData,
                         'data' => $data,
-                        'group' => $group
+                        'grouparea' => $id_grouparea
                     ]);
             
-
 
     }
 

@@ -58,15 +58,13 @@
 
     $("#estados").on("change" , function(){
         var uf = $("#estados").val();
- 
- $.get('http://190.89.81.70/nicbit/public/index.php/clients/getM/'+uf,function(data,status){
-
+        $.get('http://190.89.81.70/nicbit/public/index.php/clients/getM/'+uf,function(data,status){
+            
     if (status == "success"){
         $('#cidades').html(data);
- }
-  
-});
-
+    }
+    
+    });
     });
 </script>
 
@@ -130,28 +128,8 @@ return cpf
     });
   } );
   </script>
+    <?= csrf_field() ?>
 
-<script>
-  $( function() {
-
-  } );
-  </script>
-
-
-
-
-
-
-
-
-
-      <?= csrf_field() ?>
-
-    
-    <!-- load extended scripts -->
     <?= $this->renderSection('script') ?>
-
-
 </body>
-
 </html>

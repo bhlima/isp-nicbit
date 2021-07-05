@@ -41,9 +41,9 @@ use CodeIgniter\Model;
 
 
 
-class AreasModel extends Model
+class SubareasModel extends Model
 {
-	protected $table      = 'areas';
+	protected $table      = 'subarea';
 	protected $primaryKey = 'id';
 
 	protected $returnType = 'array';
@@ -51,7 +51,7 @@ class AreasModel extends Model
 
 	// this happens first, model removes all other fields from input data
 	protected $allowedFields = [
-		'id', 'groupareas' 
+		'id', 'id_grouparea', 'subarea_name' 
     	];
 
 	protected $useTimestamps = false;
@@ -60,7 +60,7 @@ class AreasModel extends Model
 
 	protected $dynamicRules = [
 		'cadastro' => [
-			'groupareas'			        => 'required',
+			'subarea_name'			        => 'required',
 		],
 	];
 

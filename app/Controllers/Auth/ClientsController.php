@@ -226,7 +226,6 @@ class ClientsController extends Controller
 
 		];
 
-
 		if (! $userinfos->save($userinfo)) {
 			return redirect()->route('/index.php/clients/edit/' . $username)->withInput()->with('errors', $userinfos->errors());
         }
@@ -260,14 +259,13 @@ class ClientsController extends Controller
 			return redirect()->route('login');
 		}
 
-		// save new user, validation happens in the model
+		//Inicializa models
 		$clients = new ClientsModel();
-
         $userinfos = new CliinfoModel();
 
+		//Captura dados
 		$getRule = $clients->getRule('cadastro');
 		$clients->setValidationRules($getRule);
-
 		$getRule = $userinfos->getRule('saveindexkey');
 		$userinfos->setValidationRules($getRule);
 		
@@ -284,17 +282,6 @@ class ClientsController extends Controller
             'nome'			=> $this->request->getPost('username'),
             'telefone1'  	=> '(00) 00000 0000',
         ];
-
-//print_r($userinfo);
-//print_r($client);
-//exit;
-
-//echo '<pre>';
-//print_r($clients);
-//print_r($userinfos);exit;
-
-//$clients->save($client);
-//$userinfos->save($userinfo);
 
 if (! $userinfos->save($userinfo ) )  {
 	return redirect()->route('clients')->with('error', 'Voce errou seu asno!');

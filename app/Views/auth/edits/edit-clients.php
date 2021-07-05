@@ -85,18 +85,19 @@
 
 
             <div class="col">
-                <label for="localidadeatt">Região da Instalação</label>
-                <input class="form-control form-control-sm" type="text" name="localidadeatt" 
-                  value="<?= $data['localidadeatt'] ?>" />
+                <label for="localidadeatt">Local do atendimento</label>
+                <select name='localidadeatt' id='localidadeatt' class="form-control form-control-sm">
+                <option><?= $data['localidadeatt'] ?></option>
+                </select> 
             </div>
 
-            </div>
 
-            <div class="form-group">
+            <div class="col">
                 <label for="referencia">Referencia</label>
                 <input class="form-control form-control-sm" type="text" name="referencia" 
                   value="<?= $data['referencia'] ?>" />
             </div>
+</div>
 
             <div class="form-group row">
 

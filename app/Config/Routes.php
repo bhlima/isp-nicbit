@@ -171,7 +171,10 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
 
     // Areas
     $routes->get('areas', 'Auth\AreasController::areas'); // new
-    
+    $routes->post('areas/create', 'Auth\AreasController::create'); // new
+    $routes->post('areas/subgrouparea', 'Auth\AreasController::subgrouparea'); // new
+    $routes->get('areas/createsub', 'Auth\AreasController::precreatesub'); // new
+
 
     // Installs
     $routes->get('installs', 'Auth\InstallController::installs'); // new
