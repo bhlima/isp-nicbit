@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -59,31 +60,30 @@ class  MapController extends Controller
 	protected $config;
 
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
 		// start session
 		$this->session = Services::session();
-
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Displays account settings.
 	 */
-        
+
 	public function map()
 	{
 
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->route('public/login');
 		}
 
-        $maps			 = new MapModel();
-		$totalmapeamento = $maps->countAll(); 
-		$allmaps         = $maps->findAll(); 
+		$maps			 = new MapModel();
+		$totalmapeamento = $maps->countAll();
+		$allmaps         = $maps->findAll();
 
 
 		return view('auth/maps', [
@@ -91,31 +91,5 @@ class  MapController extends Controller
 			'totalmapeamento'   => $totalmapeamento,
 			'data'              => $allmaps,
 		]);
-    }
-
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -53,7 +54,7 @@ class SettingsController extends Controller
 	 */
 	protected $session;
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
@@ -61,12 +62,12 @@ class SettingsController extends Controller
 		$this->session = Services::session();
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Displays settings page.
 	 */
-	public function settings() 
+	public function settings()
 	{
 		$settings = new SettingsModel();
 		$emailconfig = new EmailconfigModel();
@@ -75,8 +76,8 @@ class SettingsController extends Controller
 		$email = $emailconfig->where('id', 1)->first();
 
 		return view('auth/settings', [
-			'userData' => $this->session->userData, 
-			'system' => $system, 
+			'userData' => $this->session->userData,
+			'system' => $system,
 			'email' => $email
 		]);
 	}
@@ -91,7 +92,7 @@ class SettingsController extends Controller
 			'timeformat'	=> 'required',
 		];
 
-		if (! $this->validate($rules)) {
+		if (!$this->validate($rules)) {
 			return redirect()->route('settings')->withInput()->with('errors', $this->validator->getErrors());
 		}
 
@@ -106,11 +107,11 @@ class SettingsController extends Controller
 			'iprestriction' 	=> $this->request->getPost('iprestriction'),
 		];
 
-		if (! $settings->save($system)) {
+		if (!$settings->save($system)) {
 			return redirect()->route('settings')->withInput()->with('errors', $settings->errors());
-        }
+		}
 
-        return redirect()->route('settings')->with('success', lang('Auth.updateSuccess'));
+		return redirect()->route('settings')->with('success', lang('Auth.updateSuccess'));
 	}
 
 	public function updateEmail()
@@ -126,7 +127,7 @@ class SettingsController extends Controller
 			'port'	=> 'required',
 		];
 
-		if (! $this->validate($rules)) {
+		if (!$this->validate($rules)) {
 			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 		}
 
@@ -134,16 +135,15 @@ class SettingsController extends Controller
 
 		// set the password variable
 		$hashedpass = null;
-		
+
 		// get the password text
 		$password = $this->request->getPost('password');
-		
+
 		// pass the encrypted text to hashedpass variable
-		if ($password !== null) 
-		{
+		if ($password !== null) {
 			$hashedpass = password_hash($password, PASSWORD_DEFAULT);
 			// else value is null by default
-		} 
+		}
 
 		$email = [
 			'id'  	=> $this->request->getPost('id'),
@@ -157,10 +157,10 @@ class SettingsController extends Controller
 			'password' 	=> $hashedpass
 		];
 
-		if (! $emailconfig->save($email)) {
+		if (!$emailconfig->save($email)) {
 			return redirect()->back()->withInput()->with('errors', $emailconfig->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', lang('Auth.updateSuccess'));
+		return redirect()->back()->with('success', lang('Auth.updateSuccess'));
 	}
 }

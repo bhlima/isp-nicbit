@@ -12,7 +12,7 @@
         <h1 class="h2">Grupos de areas de atendimento</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" 
-            data-target="#creategroupareaformmodal" data-id='<? ?>'><i 
+            data-target="#creategroupareaformmodal"><i 
             class="fas fa-user-plus"></i>Adicionar um grupo</button>
         </div>
     </div>

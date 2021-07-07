@@ -122,6 +122,7 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
     // Contracts
     $routes->get('/contracts', 'Auth\ContractsController::contracts', ['as' => 'contracts']);
     $routes->get('/contracts/create', 'Auth\ContractsController::contracts', ['as' => 'create']);
+    $routes->get('/contracts/add/(:any)', 'Auth\ContractsController::addcontract', ['as' => 'addcontract']);
 
 
     //nicbit
@@ -173,17 +174,14 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
     $routes->get('areas', 'Auth\AreasController::areas'); // new
     $routes->post('areas/create', 'Auth\AreasController::create'); // new
     $routes->post('areas/subgrouparea', 'Auth\AreasController::subgrouparea'); // new
-    $routes->get('areas/createsub', 'Auth\AreasController::precreatesub'); // new
-
+    $routes->get('areas/createsub/(:any)', 'Auth\AreasController::precreatesub'); // new
+    $routes->post('areas/creates', 'Auth\AreasController::createsub'); // new
 
     // Installs
     $routes->get('installs', 'Auth\InstallController::installs'); // new
 
-
     // Transactions
     $routes->get('transactions', 'Auth\TransactionsController::transactions'); // new
-
-
 
     $routes->get('clients/delete/(:num)', 'Auth\ClientsController::delete'); // new
     $routes->post('clients/create', 'Auth\ClientsController::create');
@@ -191,9 +189,6 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
 
     //Ajax teste bet
     $routes->get('clients/getM/(:any)', 'Auth\ClientsController::getMunicipios');
-
-
-
 
     // Settings
     $routes->get('settings', 'Auth\SettingsController::settings', ['as' => 'settings']); // new

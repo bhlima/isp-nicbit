@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -56,7 +57,7 @@ class InstallController extends Controller
 
 	public function installs()
 	{
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->to('login');
 		}
 
@@ -64,18 +65,18 @@ class InstallController extends Controller
 
 		$installs = new InstallsModel();
 
-		$allinstalls = $installs->findAll(); 
+		$allinstalls = $installs->findAll();
 
-		$ninstalls = $installs->countAll(); 
+		$ninstalls = $installs->countAll();
 
-		$installsopen = $installs->where('active', 1)->countAllResults(); 
+		$installsopen = $installs->where('active', 1)->countAllResults();
 
-			return view('auth/installs', [
-				'userData'          => $this->session->userData, 
-				'data'              => $allinstalls, 
-				'ninstalls'         => $ninstalls, 
-				'installsopen'    => $installsopen
-			]);
+		return view('auth/installs', [
+			'userData'          => $this->session->userData,
+			'data'              => $allinstalls,
+			'ninstalls'         => $ninstalls,
+			'installsopen'    => $installsopen
+		]);
 	}
 
 	public function enable()
@@ -87,11 +88,11 @@ class InstallController extends Controller
 			'active'  	=> 1,
 		];
 
-		if (! $gateways->save($gateway)) {
+		if (!$gateways->save($gateway)) {
 			return redirect()->back()->withInput()->with('errors', $gateways->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', lang('Auth.enableUser'));
+		return redirect()->back()->with('success', lang('Auth.enableUser'));
 	}
 
 
@@ -104,11 +105,11 @@ class InstallController extends Controller
 			'active'  	=> 0,
 		];
 
-		if (! $gateways->save($gateway)) {
+		if (!$gateways->save($gateway)) {
 			return redirect()->back()->withInput()->with('errors', $gateways->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', lang('Auth.enableUser'));
+		return redirect()->back()->with('success', lang('Auth.enableUser'));
 	}
 
 
@@ -118,12 +119,12 @@ class InstallController extends Controller
 	{
 		$id = $this->request->uri->getSegment(3);
 		$gateways = new InstallsModel();
-		$gateway = $gateways->where('id', $id)->first(); 
+		$gateway = $gateways->where('id', $id)->first();
 
 		return view('auth/edits/edit-gateway', [
-				'userData' => $this->session->userData, 
-				'gateway' => $gateway, 
-			]);
+			'userData' => $this->session->userData,
+			'gateway' => $gateway,
+		]);
 	}
 
 
@@ -131,7 +132,7 @@ class InstallController extends Controller
 	{
 		$rules = [
 			'id'     		    => 'required|is_natural',
-            'client_id' 		=> 'required|is_natural',
+			'client_id' 		=> 'required|is_natural',
 			'client_secret' 	=> 'required|is_natural',
 			'pix_cert' 			=> 'required|alpha_space|min_length[2]',
 			'sandbox' 			=> 'required',
@@ -139,7 +140,7 @@ class InstallController extends Controller
 			'timeout'	        => 'required'
 		];
 
-		if (! $this->validate($rules)) {
+		if (!$this->validate($rules)) {
 			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 		}
 
@@ -152,14 +153,14 @@ class InstallController extends Controller
 			'pix_cert' 	        => $this->request->getPost('pix_cert'),
 			'sandbox' 	        => $this->request->getPost('sandbox'),
 			'debug' 	        => $this->request->getPost('debug'),
-            'timeout' 	        => $this->request->getPost('timeout')
+			'timeout' 	        => $this->request->getPost('timeout')
 		];
 
-		if (! $gateways->save($gateway)) {
+		if (!$gateways->save($gateway)) {
 			return redirect()->back()->withInput()->with('errors', $gateways->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', lang('Auth.updateSuccess'));
+		return redirect()->back()->with('success', lang('Auth.updateSuccess'));
 	}
 
 
@@ -169,7 +170,7 @@ class InstallController extends Controller
 		$id = $this->request->uri->getSegment(3);
 		$gateways = new InstallsModel();
 		$gateways->delete($id);
-        return redirect()->back()->with('success', lang('Auth.accountDeleted'));
+		return redirect()->back()->with('success', lang('Auth.accountDeleted'));
 	}
 
 
@@ -181,22 +182,20 @@ class InstallController extends Controller
 		$gateways = new InstallsModel();
 		$getRule = $gateways->getRule('cadastro');
 		$gateways->setValidationRules($getRule);
-		
-        $gateway = [
-            'id'          	    => $this->request->getPost('id'),
-            'client_id'         => $this->request->getPost('client_id'),
-            'client_secret'     => $this->request->getPost('client_secret'),
-            'pix_cert'         	=> $this->request->getPost('pix_cert'),
-            'sandbox'     		=> $this->request->getPost('sandbox'),
-            'debug'	            => $this->request->getPost('debug'),
-            'timeout' 	        => $this->request->getPost('timeout')
-        ];
 
-        if (! $gateways->save($gateway)) {
+		$gateway = [
+			'id'          	    => $this->request->getPost('id'),
+			'client_id'         => $this->request->getPost('client_id'),
+			'client_secret'     => $this->request->getPost('client_secret'),
+			'pix_cert'         	=> $this->request->getPost('pix_cert'),
+			'sandbox'     		=> $this->request->getPost('sandbox'),
+			'debug'	            => $this->request->getPost('debug'),
+			'timeout' 	        => $this->request->getPost('timeout')
+		];
+
+		if (!$gateways->save($gateway)) {
 			return redirect()->back()->withInput()->with('errors', $gateways->errors());
-        }
-        return redirect()->back()->with('success', 'Success! You created a new account');
+		}
+		return redirect()->back()->with('success', 'Success! You created a new account');
 	}
-
-
 }

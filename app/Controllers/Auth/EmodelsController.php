@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -56,7 +57,7 @@ class EmodelsController extends Controller
 	protected $config;
 
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
@@ -64,7 +65,7 @@ class EmodelsController extends Controller
 		$this->session = Services::session();
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Displays users page.
@@ -72,7 +73,7 @@ class EmodelsController extends Controller
 	public function emodels()
 	{
 		// check if user is signed-in if not redirect to login page
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->to('login');
 		}
 
@@ -83,17 +84,17 @@ class EmodelsController extends Controller
 		$emodels = new EmodelModel();
 
 		// getall users
-		$allemodels = $emodels->findAll(); 
+		$allemodels = $emodels->findAll();
 
 		// count all rows in users table
-		$countemodels = $emodels->countAll(); 
-	
+		$countemodels = $emodels->countAll();
+
 		// load the view with session data
 		return view('auth/emodels', [
-				'userData' => $this->session->userData, 
-				'data' => $allemodels, 
-				'countemodels' => $countemodels, 
-			]);
+			'userData' => $this->session->userData,
+			'data' => $allemodels,
+			'countemodels' => $countemodels,
+		]);
 	}
 
 
@@ -107,13 +108,13 @@ class EmodelsController extends Controller
 		$emodels = new EmodelModel();
 
 		// get user data using the id
-		$emodel = $emodels->where('id', $id)->first(); 
+		$emodel = $emodels->where('id', $id)->first();
 
 		// load the view with session data
 		return view('auth/edits/edit-emodel', [
-				'userData' => $this->session->userData, 
-				'emodel' => $emodel, 
-			]);
+			'userData' => $this->session->userData,
+			'emodel' => $emodel,
+		]);
 	}
 
 	public function update()
@@ -124,7 +125,7 @@ class EmodelsController extends Controller
 			'mensagem'	=> 'required'
 		];
 
-		if (! $this->validate($rules)) {
+		if (!$this->validate($rules)) {
 			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 		}
 
@@ -136,11 +137,11 @@ class EmodelsController extends Controller
 			'mensagem' 	=> $this->request->getPost('mensagem'),
 		];
 
-		if (! $emodels->save($emodel)) {
+		if (!$emodels->save($emodel)) {
 			return redirect()->back()->withInput()->with('errors', $emodels->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', 'Atualizado com sucesso!');
+		return redirect()->back()->with('success', 'Atualizado com sucesso!');
 	}
 
 	public function delete()
@@ -154,16 +155,15 @@ class EmodelsController extends Controller
 		// delete user using the id
 		$emodels->delete($id);
 
-        return redirect()->back()->with('success', lang('Auth.accountDeleted'));
+		return redirect()->back()->with('success', lang('Auth.accountDeleted'));
 	}
 
 	public function create()
 	{
 
 		return view('auth/add-emodel', [
-            'userData' => $this->session->userData
-        ]);
-
+			'userData' => $this->session->userData
+		]);
 	}
 
 
@@ -178,18 +178,16 @@ class EmodelsController extends Controller
 		$emodels = new EmodelModel();
 		$getRule = $emodels->getRule('cadastro');
 		$emodels->setValidationRules($getRule);
-		
-        $emodel = [
-            'assunto'          	=> $this->request->getPost('assunto'),
-            'mensagem'          	=> $this->request->getPost('mensagem')
-        ];
 
-        if (! $emodels->save($emodel)) {
+		$emodel = [
+			'assunto'          	=> $this->request->getPost('assunto'),
+			'mensagem'          	=> $this->request->getPost('mensagem')
+		];
+
+		if (!$emodels->save($emodel)) {
 			return redirect()->back()->withInput()->with('errors', $emodels->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', 'Success! You created a new account');
+		return redirect()->back()->with('success', 'Success! You created a new account');
 	}
-
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -59,7 +60,7 @@ class UsersController extends Controller
 	protected $config;
 
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
@@ -67,7 +68,7 @@ class UsersController extends Controller
 		$this->session = Services::session();
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Displays users page.
@@ -75,7 +76,7 @@ class UsersController extends Controller
 	public function users()
 	{
 		// check if user is signed-in if not redirect to login page
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->route('login');
 		}
 
@@ -86,28 +87,28 @@ class UsersController extends Controller
 		$users = new UserModel();
 
 		// getall users
-		$allusers = $users->findAll(); 
+		$allusers = $users->findAll();
 
 		// count all rows in users table
-		$countusers = $users->countAll(); 
+		$countusers = $users->countAll();
 
 		// count all active user in the last 30 days
-		$newusers = $users->like("created_at", $ym)->countAllResults(); 
+		$newusers = $users->like("created_at", $ym)->countAllResults();
 
 		// count all active users
-		$activeusers = $users->where('active', 1)->countAllResults(); 
+		$activeusers = $users->where('active', 1)->countAllResults();
 
 		// calculate active users in how many percents
 		$percentofactiveusers = ($activeusers / $countusers) * 100;
-		
+
 		// load the view with session data
 		return view('auth/users', [
-				'userData' => $this->session->userData, 
-				'data' => $allusers, 
-				'usercount' => $countusers, 
-				'newusers' => $newusers,
-				'percentofactiveusers' => $percentofactiveusers
-			]);
+			'userData' => $this->session->userData,
+			'data' => $allusers,
+			'usercount' => $countusers,
+			'newusers' => $newusers,
+			'percentofactiveusers' => $percentofactiveusers
+		]);
 	}
 
 	public function enable()
@@ -131,11 +132,11 @@ class UsersController extends Controller
 			'active'  	=> 1,
 		];
 
-		if (! $users->save($user)) {
+		if (!$users->save($user)) {
 			return redirect()->back()->withInput()->with('errors', $users->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', lang('Auth.enableUser'));
+		return redirect()->back()->with('success', lang('Auth.enableUser'));
 	}
 
 	public function edit()
@@ -147,13 +148,13 @@ class UsersController extends Controller
 		$users = new UserModel();
 
 		// get user data using the id
-		$user = $users->where('id', $id)->first(); 
+		$user = $users->where('id', $id)->first();
 
 		// load the view with session data
 		return view('auth/edits/edit-user', [
-				'userData' => $this->session->userData, 
-				'user' => $user, 
-			]);
+			'userData' => $this->session->userData,
+			'user' => $user,
+		]);
 	}
 
 	public function update()
@@ -167,7 +168,7 @@ class UsersController extends Controller
 			'active'	=> 'required|integer',
 		];
 
-		if (! $this->validate($rules)) {
+		if (!$this->validate($rules)) {
 			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 		}
 
@@ -182,11 +183,11 @@ class UsersController extends Controller
 			'active' 	=> $this->request->getPost('active')
 		];
 
-		if (! $users->save($user)) {
+		if (!$users->save($user)) {
 			return redirect()->back()->withInput()->with('errors', $users->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', lang('Auth.updateSuccess'));
+		return redirect()->back()->with('success', lang('Auth.updateSuccess'));
 	}
 
 	public function delete()
@@ -200,7 +201,7 @@ class UsersController extends Controller
 		// delete user using the id
 		$users->delete($id);
 
-        return redirect()->back()->with('success', lang('Auth.accountDeleted'));
+		return redirect()->back()->with('success', lang('Auth.accountDeleted'));
 	}
 
 	public function createUser()
@@ -211,32 +212,32 @@ class UsersController extends Controller
 		$users = new UserModel();
 		$getRule = $users->getRule('registration');
 		$users->setValidationRules($getRule);
-		
-        $user = [
-            'firstname'          	=> $this->request->getPost('firstname'),
-            'lastname'          	=> $this->request->getPost('lastname'),
-            'name'          	=> $this->request->getPost('name'),
-            'email'         	=> $this->request->getPost('email'),
-            'password'     		=> $this->request->getPost('password'),
-            'password_confirm'	=> $this->request->getPost('password_confirm'),
-            'activate_hash' 	=> random_string('alnum', 32)
-        ];
 
-        if (! $users->save($user)) {
+		$user = [
+			'firstname'          	=> $this->request->getPost('firstname'),
+			'lastname'          	=> $this->request->getPost('lastname'),
+			'name'          	=> $this->request->getPost('name'),
+			'email'         	=> $this->request->getPost('email'),
+			'password'     		=> $this->request->getPost('password'),
+			'password_confirm'	=> $this->request->getPost('password_confirm'),
+			'activate_hash' 	=> random_string('alnum', 32)
+		];
+
+		if (!$users->save($user)) {
 			return redirect()->back()->withInput()->with('errors', $users->errors());
-        }
+		}
 
 		// send activation email //
 		// send email activation is commented no email support //
-		
+
 		// helper('auth'); 
-        // send_activation_email($user['email'], $user['activate_hash']);
+		// send_activation_email($user['email'], $user['activate_hash']);
 
 		// success
-        return redirect()->back()->with('success', 'Success! You created a new account');
+		return redirect()->back()->with('success', 'Success! You created a new account');
 	}
 
-	public function userLogs() 
+	public function userLogs()
 	{
 		// load logs model
 		$logs = new LogsModel();
@@ -245,5 +246,4 @@ class UsersController extends Controller
 
 		return view('auth/user-logs', ['userData' => $this->session->userData, 'data' => $userlogs]);
 	}
-
 }

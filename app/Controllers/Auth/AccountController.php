@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -45,7 +46,7 @@ use App\Models\ContractsModel;
 use App\Models\RadacctModel;
 use App\Models\RadcheckModel;
 use App\Models\SetModel;
-USE LinuxInfo;
+use LinuxInfo;
 use RouterosAPI;
 use Radius;
 
@@ -62,15 +63,14 @@ class AccountController extends Controller
 	public function __construct()
 	{
 		$this->session = Services::session();
-
 	}
 
-        
+
 	public function dashboard()
 	{
 
 
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->route('login');
 		}
 
@@ -84,37 +84,37 @@ class AccountController extends Controller
 		$graphtypedashboard = $set->getset('graphtypedashboard');
 		$radaccttable = $set->getset('radacct');
 
-		
+
 		//echo $graphtypedashboard->value;exit;
 
 
 		$totcontratos = $contracts->countAllResults();
 		$temponoar = $linfo->uptime();
-		$activeusers = $radius->where('acctstoptime', NULL)->countAllResults(); 
+		$activeusers = $radius->where('acctstoptime', NULL)->countAllResults();
 
-        $radcheck = new RadcheckModel();
-        $radacct  = new RadacctModel();
+		$radcheck = new RadcheckModel();
+		$radacct  = new RadacctModel();
 
 		$this->db = \Config\Database::connect();
 
 		$query = array();
 		$query  = $this->db->query('SELECT sum(acctoutputoctets) as download, sum(acctinputoctets) as upload FROM radacct WHERE DATE_FORMAT(acctstoptime, "%Y-%m-%d") = CURDATE();');
-		
+
 		$query2  = $this->db->query('SELECT * FROM radacct WHERE DATE_FORMAT(acctstarttime, "%Y-%m-%d") = CURDATE();');
 
-		$r =  0;// $this->db->count_all_results();
+		$r =  0; // $this->db->count_all_results();
 
 		$q = $query->Getrow();
-							
+
 		$totdownload 	= $this->toxbyte($q->download);
 		$totupload 		= $this->toxbyte($q->upload);
 		$logins			= $r;
 
 
 
-		$totalclientes = $radcheck->countAll(); 
+		$totalclientes = $radcheck->countAll();
 
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->route('login');
 		}
 
@@ -129,34 +129,31 @@ class AccountController extends Controller
 		$grafico2 	= '[';
 		$grafico3 	= '[';
 
-		foreach ($query->getResult('array') as $row)
-		{
-			$plabels .= $row['time']; 
+		foreach ($query->getResult('array') as $row) {
+			$plabels .= $row['time'];
 			$plabels .= ',';
 		}
-				
+
 		$plabels = rtrim($plabels, ',');
 		$plabels .= ']';
 		$row = '';
 
-		foreach ($query->getResult('array') as $row)
-		{
+		foreach ($query->getResult('array') as $row) {
 
-			$grafico1 .= $row['output']/1000/1000/1000; 
-			$grafico2 .= $row['input']/1000/1000/1000;
-			$grafico3 .= $row['input']/1000/1000/1000 + $row['output']/1000/1000/1000;
+			$grafico1 .= $row['output'] / 1000 / 1000 / 1000;
+			$grafico2 .= $row['input'] / 1000 / 1000 / 1000;
+			$grafico3 .= $row['input'] / 1000 / 1000 / 1000 + $row['output'] / 1000 / 1000 / 1000;
 
 			$grafico1 .= ',';
 			$grafico2 .= ',';
 			$grafico3 .= ',';
-
 		}
-				
+
 		$grafico1 = rtrim($grafico1, ',');
 		$grafico1 .= ']';
-	
+
 		$grafico2 = rtrim($grafico2, ',');
-		$grafico2 .= ']';		
+		$grafico2 .= ']';
 
 		$grafico3 = rtrim($grafico3, ',');
 		$grafico3 .= ']';
@@ -183,7 +180,7 @@ class AccountController extends Controller
 
 	public function profile()
 	{
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->route('login');
 		}
 
@@ -191,7 +188,7 @@ class AccountController extends Controller
 			'userData' => $this->session->userData,
 		]);
 	}
-	
+
 
 	public function updateProfile()
 	{
@@ -207,13 +204,13 @@ class AccountController extends Controller
 			'email' 	=> $this->request->getPost('email')
 		];
 
-		if (! $users->save($user)) {
+		if (!$users->save($user)) {
 			return redirect()->back()->withInput()->with('errors', $users->errors());
-        }
+		}
 
-        $this->session->push('userData', $user);
+		$this->session->push('userData', $user);
 
-        return redirect()->route('profile')->with('success', lang('Auth.updateSuccess'));
+		return redirect()->route('profile')->with('success', lang('Auth.updateSuccess'));
 	}
 
 
@@ -229,17 +226,17 @@ class AccountController extends Controller
 			'name' 	=> $this->request->getPost('name')
 		];
 
-		if (! $users->save($user)) {
+		if (!$users->save($user)) {
 			return redirect()->back()->withInput()->with('errors', $users->errors());
-        }
+		}
 
-        // update session data
-        $this->session->push('userData', $user);
+		// update session data
+		$this->session->push('userData', $user);
 
-        return redirect()->to('account')->with('success', lang('Auth.updateSuccess'));
+		return redirect()->to('account')->with('success', lang('Auth.updateSuccess'));
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Handles password change.
@@ -253,7 +250,7 @@ class AccountController extends Controller
 			'new_password_confirm' => 'required|matches[new_password]'
 		];
 
-		if (! $this->validate($rules)) {
+		if (!$this->validate($rules)) {
 			return redirect()->route('profile')->withInput()
 				->with('errors', $this->validator->getErrors());
 		}
@@ -264,8 +261,8 @@ class AccountController extends Controller
 		$user = $users->find($this->session->get('userData.id'));
 
 		if (
-			! $user ||
-			! password_verify($this->request->getPost('password'), $user['password_hash'])
+			!$user ||
+			!password_verify($this->request->getPost('password'), $user['password_hash'])
 		) {
 			return redirect()->route('profile')->withInput()->with('error', lang('Auth.wrongCredentials'));
 		}
@@ -281,7 +278,7 @@ class AccountController extends Controller
 		return redirect()->to('profile')->with('success', lang('Auth.passwordUpdateSuccess'));
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Deletes user account.
@@ -290,12 +287,12 @@ class AccountController extends Controller
 	{
 		// check current password
 		$users = new UserModel();
-		
+
 		$user = $users->find($this->session->get('userData.id'));
 
 		if (
-			! $user ||
-			! password_verify($this->request->getPost('password'), $user['password_hash'])
+			!$user ||
+			!password_verify($this->request->getPost('password'), $user['password_hash'])
 		) {
 			return redirect()->back()->withInput()->with('error', lang('Auth.wrongCredentials'));
 		}
@@ -314,94 +311,61 @@ class AccountController extends Controller
 
 	public function toxbytedata($size)
 	{
-			// Gigabytes
-			if ( $size > 1073741824 )
-			{
-					$ret = $size / 1073741824;
-					$ret = round($ret,2);
-					return $ret;
-			}
-	
-			// Megabytes
-			if ( $size > 1048576 )
-			{
-					$ret = $size / 1048576;
-					$ret = round($ret,2);
-					return $ret;
-			}
-	
-			// Kilobytes
-			if ($size > 1024 )
-			{
-					$ret = $size / 1024;
-					$ret = round($ret,2);
-					return $ret;
-			}
-	
-			// Bytes
-			if ( ($size != "") && ($size <= 1024 ) )
-			{
-					$ret = $size;
-					return $ret;
-			}
-	
+		// Gigabytes
+		if ($size > 1073741824) {
+			$ret = $size / 1073741824;
+			$ret = round($ret, 2);
+			return $ret;
+		}
+
+		// Megabytes
+		if ($size > 1048576) {
+			$ret = $size / 1048576;
+			$ret = round($ret, 2);
+			return $ret;
+		}
+
+		// Kilobytes
+		if ($size > 1024) {
+			$ret = $size / 1024;
+			$ret = round($ret, 2);
+			return $ret;
+		}
+
+		// Bytes
+		if (($size != "") && ($size <= 1024)) {
+			$ret = $size;
+			return $ret;
+		}
 	}
 
 	public function toxbyte($size)
 	{
-			// Gigabytes
-			if ( $size > 1073741824 )
-			{
-					$ret = $size / 1073741824;
-					$ret = round($ret,2)." Gb";
-					return $ret;
-			}
-	
-			// Megabytes
-			if ( $size > 1048576 )
-			{
-					$ret = $size / 1048576;
-					$ret = round($ret,2)." Mb";
-					return $ret;
-			}
-	
-			// Kilobytes
-			if ($size > 1024 )
-			{
-					$ret = $size / 1024;
-					$ret = round($ret,2)." Kb";
-					return $ret;
-			}
-	
-			// Bytes
-			if ( ($size != "") && ($size <= 1024 ) )
-			{
-					$ret = $size." B";
-					return $ret;
-			}
-	
+		// Gigabytes
+		if ($size > 1073741824) {
+			$ret = $size / 1073741824;
+			$ret = round($ret, 2) . " Gb";
+			return $ret;
+		}
+
+		// Megabytes
+		if ($size > 1048576) {
+			$ret = $size / 1048576;
+			$ret = round($ret, 2) . " Mb";
+			return $ret;
+		}
+
+		// Kilobytes
+		if ($size > 1024) {
+			$ret = $size / 1024;
+			$ret = round($ret, 2) . " Kb";
+			return $ret;
+		}
+
+		// Bytes
+		if (($size != "") && ($size <= 1024)) {
+			$ret = $size . " B";
+			return $ret;
+		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

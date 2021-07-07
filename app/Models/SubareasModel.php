@@ -51,7 +51,7 @@ class SubareasModel extends Model
 
 	// this happens first, model removes all other fields from input data
 	protected $allowedFields = [
-		'id', 'id_grouparea', 'subarea_name' 
+		'id', 'id_grouparea', 'subgroup_name' 
     	];
 
 	protected $useTimestamps = false;
@@ -60,7 +60,8 @@ class SubareasModel extends Model
 
 	protected $dynamicRules = [
 		'cadastro' => [
-			'subarea_name'			        => 'required',
+			'id_grouparea'			        => 'required',
+			'subgroup_name'			        => 'required',
 		],
 	];
 

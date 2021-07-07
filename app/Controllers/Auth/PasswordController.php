@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -57,7 +58,7 @@ class PasswordController extends Controller
 	protected $config;
 
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
@@ -65,9 +66,9 @@ class PasswordController extends Controller
 		$this->session = Services::session();
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
-    public function forgotPassword()
+	public function forgotPassword()
 	{
 		if ($this->session->isLoggedIn) {
 			return redirect()->to('account');
@@ -76,28 +77,28 @@ class PasswordController extends Controller
 		return view('auth/auth/forgot');
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function attemptForgotPassword()
 	{
 		// validate request
-		if (! $this->validate(['email' => 'required|valid_email'])) {
-            return redirect()->back()->with('error', lang('Auth.wrongEmail'));
-        }
+		if (!$this->validate(['email' => 'required|valid_email'])) {
+			return redirect()->back()->with('error', lang('Auth.wrongEmail'));
+		}
 
 		// check if email exists in DB
 		$users = new UserModel();
 
 		$user = $users->where('email', $this->request->getPost('email'))->first();
 
-		if (! $user) {
-            return redirect()->back()->with('error', lang('Auth.wrongEmail'));
-        }
+		if (!$user) {
+			return redirect()->back()->with('error', lang('Auth.wrongEmail'));
+		}
 
-        // check if email is already sent to prevent spam
-        if (! empty($user['reset_expires']) && $user['reset_expires'] >= time()) {
+		// check if email is already sent to prevent spam
+		if (!empty($user['reset_expires']) && $user['reset_expires'] >= time()) {
 			return redirect()->back()->with('error', lang('Auth.emailAlreadySent'));
-        }
+		}
 
 		// set reset hash and expiration
 		helper('text');
@@ -108,12 +109,12 @@ class PasswordController extends Controller
 
 		// send password reset e-mail
 		helper('auth');
-        send_password_reset_email($this->request->getPost('email'), $updatedUser['reset_hash']);
+		send_password_reset_email($this->request->getPost('email'), $updatedUser['reset_hash']);
 
-        return redirect()->back()->with('success', lang('Auth.forgottenPasswordEmail'));
+		return redirect()->back()->with('success', lang('Auth.forgottenPasswordEmail'));
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function resetPassword()
 	{
@@ -124,14 +125,14 @@ class PasswordController extends Controller
 			->where('reset_expires >', time())
 			->first();
 
-		if (! $user) {
-            return redirect()->to('login')->with('error', lang('Auth.invalidRequest'));
-        }
+		if (!$user) {
+			return redirect()->to('login')->with('error', lang('Auth.invalidRequest'));
+		}
 
 		return view('auth/auth/reset');
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function attemptResetPassword()
 	{
@@ -142,31 +143,29 @@ class PasswordController extends Controller
 			'password_confirm' => 'matches[password]'
 		];
 
-		if (! $this->validate($rules)) {
-            return redirect()->back()->with('error', lang('Auth.passwordMismatch'));
-        }
+		if (!$this->validate($rules)) {
+			return redirect()->back()->with('error', lang('Auth.passwordMismatch'));
+		}
 
 		// check reset hash, expiration
 		$users = new UserModel();
-		
+
 		$user = $users->where('reset_hash', $this->request->getPost('token'))
 			->where('reset_expires >', time())
 			->first();
 
-		if (! $user) {
-            return redirect()->to('login')->with('error', lang('Auth.invalidRequest'));
-        }
+		if (!$user) {
+			return redirect()->to('login')->with('error', lang('Auth.invalidRequest'));
+		}
 
 		// update user password
-        $updatedUser['id'] = $user['id'];
-        $updatedUser['password'] = $this->request->getPost('password');
-        $updatedUser['reset_hash'] = null;
-        $updatedUser['reset_expires'] = null;
-        $users->save($updatedUser);
+		$updatedUser['id'] = $user['id'];
+		$updatedUser['password'] = $this->request->getPost('password');
+		$updatedUser['reset_hash'] = null;
+		$updatedUser['reset_expires'] = null;
+		$users->save($updatedUser);
 
 		// redirect to login
-        return redirect()->to('login')->with('success', lang('Auth.passwordUpdateSuccess'));
-
+		return redirect()->to('login')->with('success', lang('Auth.passwordUpdateSuccess'));
 	}
-
 }

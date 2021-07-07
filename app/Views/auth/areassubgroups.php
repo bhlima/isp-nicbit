@@ -15,7 +15,7 @@
             <i class="fas fa-arrow-left"></i> <?=lang('back')?></a>
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="<?= site_url('areas/createsub') ?>" class="btn btn-sm btn-primary">
+            <a href="<?= site_url('areas/createsub/') . $grouparea ?>" class="btn btn-sm btn-primary">
             <i class="fas fa-user-plus"></i> Criar um Sub Grupo </a>
         </div>
     </div>

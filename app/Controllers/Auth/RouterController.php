@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -58,7 +59,7 @@ class RouterController extends Controller
 	protected $config;
 
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
@@ -66,7 +67,7 @@ class RouterController extends Controller
 		$this->session = Services::session();
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Displays routers page.
@@ -74,7 +75,7 @@ class RouterController extends Controller
 	public function router()
 	{
 		// check if user is signed-in if not redirect to login page
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->route('login');
 		}
 
@@ -84,36 +85,36 @@ class RouterController extends Controller
 
 		// Load model for auth
 		$radacct  =  new RadacctModel();
-		
+
 
 
 		// load router model
 		$routers = new RouterModel();
 
 		// getall routers
-		$allrouters = $routers->findAll(); 
+		$allrouters = $routers->findAll();
 
 		//$authtoday = $radacct->
 
 
-		 
+
 		//echo $output = shell_exec('snmpwalk -v 1 -c public 10.0.0.1 .1.3.6.1.2.1.1.1.0');
-		
+
 
 
 		// count all rows in users table
-		$countrouters = $routers->countAll(); 
+		$countrouters = $routers->countAll();
 
 		// get routers active
-		$activerouters = ''; 
-		
+		$activerouters = '';
+
 		// load the view with session data
 		return view('auth/servidores', [
-				'userData' => $this->session->userData, 
-				'data' => $allrouters, 
-				'routerativo' => $activerouters,
-				'routercount' => $countrouters
-			]);
+			'userData' => $this->session->userData,
+			'data' => $allrouters,
+			'routerativo' => $activerouters,
+			'routercount' => $countrouters
+		]);
 	}
 
 
@@ -126,14 +127,14 @@ class RouterController extends Controller
 		$routers = new RouterModel();
 
 		// get user data using the id
-		$router = $routers->where('id', $id)->first(); 
+		$router = $routers->where('id', $id)->first();
 		//print_r($router);
 
 		// load the view with session data
 		return view('auth/edits/edit-router', [
-				'userData' => $this->session->userData, 
-				'router' => $router, 
-			]);
+			'userData' => $this->session->userData,
+			'router' => $router,
+		]);
 	}
 
 	public function update()
@@ -145,7 +146,7 @@ class RouterController extends Controller
 			'secret'	=> 'required',
 		];
 
-		if (! $this->validate($rules)) {
+		if (!$this->validate($rules)) {
 			return redirect()->route('router')->withInput()->with('errors', $this->validator->getErrors());
 		}
 
@@ -160,17 +161,17 @@ class RouterController extends Controller
 			'secret' 		=> $this->request->getPost('secret'),
 			'server' 		=> $this->request->getPost('server'),
 			'community' 	=> $this->request->getPost('community'),
-			'description' 	=> $this->request->getPost('description')		
+			'description' 	=> $this->request->getPost('description')
 
 		];
 
 
-		if (! $routers->save($router)) {
+		if (!$routers->save($router)) {
 			$vid = $this->request->getPost('id');
 			return redirect()->route('router')->withInput()->with('errors', $routers->errors());
-        }
+		}
 
-        return redirect()->route('router')->with('success', 'NAS atualizado com sucesso, servidor precisar ser reiniciado para que as alterações façam efeito.');
+		return redirect()->route('router')->with('success', 'NAS atualizado com sucesso, servidor precisar ser reiniciado para que as alterações façam efeito.');
 	}
 
 	public function delete()
@@ -184,7 +185,7 @@ class RouterController extends Controller
 		// delete user using the id
 		$routers->delete($id);
 
-        return redirect()->route('router')->with('success', 'NAS Removido do Sistema, servidor precisar ser reiniciado.');
+		return redirect()->route('router')->with('success', 'NAS Removido do Sistema, servidor precisar ser reiniciado.');
 	}
 
 	public function createRouter()
@@ -195,7 +196,7 @@ class RouterController extends Controller
 		$routers = new RouterModel();
 		$getRule = $routers->getRule('cadastro');
 		$routers->setValidationRules($getRule);
-		
+
 		$router = [
 			'id'  			=> $this->request->getPost('id'),
 			'nasname' 		=> $this->request->getPost('nasname'),
@@ -205,16 +206,15 @@ class RouterController extends Controller
 			'secret' 		=> $this->request->getPost('secret'),
 			'server' 		=> $this->request->getPost('server'),
 			'community' 	=> $this->request->getPost('community'),
-			'description' 	=> $this->request->getPost('description')		
+			'description' 	=> $this->request->getPost('description')
 
 		];
 
-        if (! $routers->save($router)) {
+		if (!$routers->save($router)) {
 			return redirect()->route('router')->withInput()->with('errors', $routers->errors());
-        }
+		}
 
 		// success
-        return redirect()->route('router')->with('success', 'Pronto! Você adicionou nova estação cliente');
+		return redirect()->route('router')->with('success', 'Pronto! Você adicionou nova estação cliente');
 	}
-
 }

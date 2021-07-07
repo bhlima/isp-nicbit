@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -46,23 +47,22 @@ class GroupsController extends Controller
 	protected $session;
 	protected $config;
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
 		$this->session = Services::session();
-
 	}
 
-        
+
 	public function Groups()
 	{
 
-		$groups= new GroupModel();
-		$allgroups = $groups->findall(); 
-		$totalgroups = $groups->countAll(); 
+		$groups = new GroupModel();
+		$allgroups = $groups->findall();
+		$totalgroups = $groups->countAll();
 
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->route('public/login');
 		}
 
@@ -73,11 +73,11 @@ class GroupsController extends Controller
 		]);
 	}
 
-    public function editgroups()
+	public function editgroups()
 	{
 
 		// check if user is signed-in if not redirect to login page
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->route('login');
 		}
 
@@ -85,10 +85,10 @@ class GroupsController extends Controller
 		$id = $this->request->uri->getSegment(3);
 
 		// load user model
-        $groups = new GroupModel();
+		$groups = new GroupModel();
 
 		// get user data using the id
-		$group = $groups->where('id', $id)->first(); 
+		$group = $groups->where('id', $id)->first();
 
 
 		//echo '<pre>';
@@ -96,9 +96,9 @@ class GroupsController extends Controller
 
 		// load the view with session data
 		return view('auth/edits/edit-group', [
-				'userData' => $this->session->userData, 
-				'data' => $group
-			]);
+			'userData' => $this->session->userData,
+			'data' => $group
+		]);
 	}
 
 	public function update()
@@ -111,26 +111,26 @@ class GroupsController extends Controller
 		$group = [
 			'id'  	        => $this->session->get('id'),
 			'groupname' 	=> $this->request->getPost('groupname'),
-            'attribute' 	=> $this->request->getPost('attribute'),
+			'attribute' 	=> $this->request->getPost('attribute'),
 			'op' 	        => $this->request->getPost('op'),
 			'value' 	    => $this->request->getPost('value')
 
 		];
 
-		if (! $groups->save($group)) {
+		if (!$groups->save($group)) {
 			return redirect()->route('groups')->withInput()->with('errors', $groups->errors());
-        }
+		}
 
-        return redirect()->route('groups')->with('success', lang('Auth.updateSuccess'));
+		return redirect()->route('groups')->with('success', lang('Auth.updateSuccess'));
 	}
 
 
 
-    public function delete($id)
+	public function delete($id)
 	{
 		// check current password
 		$groups = new GroupModel();
-		
+
 		$user = $groups->delete($id);
 
 
@@ -142,7 +142,7 @@ class GroupsController extends Controller
 		return redirect()->route('register')->with('success', lang('Auth.accountDeleted'));
 	}
 
-    public function create()
+	public function create()
 	{
 		helper('text');
 
@@ -150,20 +150,19 @@ class GroupsController extends Controller
 
 		$getRule = $groups->getRule('cadastro');
 		$groups->setValidationRules($getRule);
-		
 
-        $group = [
-            'groupname'          	=> $this->request->getPost('groupname'),
-            'attribute'          	=> $this->request->getPost('attribute'),
-            'op'          	        => $this->request->getPost('op'),
-            'value'         	    => $this->request->getPost('value')			
-        ];
 
-    if (! $groups->save($group) )  {
-	    return redirect()->route('groups');
-    }
+		$group = [
+			'groupname'          	=> $this->request->getPost('groupname'),
+			'attribute'          	=> $this->request->getPost('attribute'),
+			'op'          	        => $this->request->getPost('op'),
+			'value'         	    => $this->request->getPost('value')
+		];
 
-    return redirect()->route('groups')->with('success', 'ok! Tudo certo mano!');
+		if (!$groups->save($group)) {
+			return redirect()->route('groups');
+		}
+
+		return redirect()->route('groups')->with('success', 'ok! Tudo certo mano!');
 	}
-
 }

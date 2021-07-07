@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -56,7 +57,7 @@ class GatewaysController extends Controller
 
 	public function gateways()
 	{
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->to('login');
 		}
 
@@ -64,19 +65,19 @@ class GatewaysController extends Controller
 
 		$gateways = new GatewayModel();
 
-		$allgateways = $gateways->findAll(); 
+		$allgateways = $gateways->findAll();
 
-		$ngateways = $gateways->countAll(); 
+		$ngateways = $gateways->countAll();
 
-		$activegateways = $gateways->where('active', 1)->countAllResults(); 
+		$activegateways = $gateways->where('active', 1)->countAllResults();
 
-	
+
 		return view('auth/gateways', [
-				'userData'          => $this->session->userData, 
-				'data'       => $allgateways, 
-				'ngateways'         => $ngateways, 
-				'activegateways'    => $activegateways
-			]);
+			'userData'          => $this->session->userData,
+			'data'       => $allgateways,
+			'ngateways'         => $ngateways,
+			'activegateways'    => $activegateways
+		]);
 	}
 
 	public function enable()
@@ -88,11 +89,11 @@ class GatewaysController extends Controller
 			'active'  	=> 1,
 		];
 
-		if (! $gateways->save($gateway)) {
+		if (!$gateways->save($gateway)) {
 			return redirect()->back()->withInput()->with('errors', $gateways->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', lang('Auth.enableUser'));
+		return redirect()->back()->with('success', lang('Auth.enableUser'));
 	}
 
 
@@ -105,11 +106,11 @@ class GatewaysController extends Controller
 			'active'  	=> 0,
 		];
 
-		if (! $gateways->save($gateway)) {
+		if (!$gateways->save($gateway)) {
 			return redirect()->back()->withInput()->with('errors', $gateways->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', lang('Auth.enableUser'));
+		return redirect()->back()->with('success', lang('Auth.enableUser'));
 	}
 
 
@@ -119,12 +120,12 @@ class GatewaysController extends Controller
 	{
 		$id = $this->request->uri->getSegment(3);
 		$gateways = new GatewayModel();
-		$gateway = $gateways->where('id', $id)->first(); 
+		$gateway = $gateways->where('id', $id)->first();
 
 		return view('auth/edits/edit-gateway', [
-				'userData' => $this->session->userData, 
-				'gateway' => $gateway, 
-			]);
+			'userData' => $this->session->userData,
+			'gateway' => $gateway,
+		]);
 	}
 
 
@@ -132,7 +133,7 @@ class GatewaysController extends Controller
 	{
 		$rules = [
 			'id'     		    => 'required|is_natural',
-            'client_id' 		=> 'required|is_natural',
+			'client_id' 		=> 'required|is_natural',
 			'client_secret' 	=> 'required|is_natural',
 			'pix_cert' 			=> 'required|alpha_space|min_length[2]',
 			'sandbox' 			=> 'required',
@@ -140,7 +141,7 @@ class GatewaysController extends Controller
 			'timeout'	        => 'required'
 		];
 
-		if (! $this->validate($rules)) {
+		if (!$this->validate($rules)) {
 			return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 		}
 
@@ -153,14 +154,14 @@ class GatewaysController extends Controller
 			'pix_cert' 	        => $this->request->getPost('pix_cert'),
 			'sandbox' 	        => $this->request->getPost('sandbox'),
 			'debug' 	        => $this->request->getPost('debug'),
-            'timeout' 	        => $this->request->getPost('timeout')
+			'timeout' 	        => $this->request->getPost('timeout')
 		];
 
-		if (! $gateways->save($gateway)) {
+		if (!$gateways->save($gateway)) {
 			return redirect()->back()->withInput()->with('errors', $gateways->errors());
-        }
+		}
 
-        return redirect()->back()->with('success', lang('Auth.updateSuccess'));
+		return redirect()->back()->with('success', lang('Auth.updateSuccess'));
 	}
 
 
@@ -170,7 +171,7 @@ class GatewaysController extends Controller
 		$id = $this->request->uri->getSegment(3);
 		$gateways = new GatewayModel();
 		$gateways->delete($id);
-        return redirect()->back()->with('success', lang('Auth.accountDeleted'));
+		return redirect()->back()->with('success', lang('Auth.accountDeleted'));
 	}
 
 
@@ -182,22 +183,20 @@ class GatewaysController extends Controller
 		$gateways = new GatewayModel();
 		$getRule = $gateways->getRule('cadastro');
 		$gateways->setValidationRules($getRule);
-		
-        $gateway = [
-            'id'          	    => $this->request->getPost('id'),
-            'client_id'         => $this->request->getPost('client_id'),
-            'client_secret'     => $this->request->getPost('client_secret'),
-            'pix_cert'         	=> $this->request->getPost('pix_cert'),
-            'sandbox'     		=> $this->request->getPost('sandbox'),
-            'debug'	            => $this->request->getPost('debug'),
-            'timeout' 	        => $this->request->getPost('timeout')
-        ];
 
-        if (! $gateways->save($gateway)) {
+		$gateway = [
+			'id'          	    => $this->request->getPost('id'),
+			'client_id'         => $this->request->getPost('client_id'),
+			'client_secret'     => $this->request->getPost('client_secret'),
+			'pix_cert'         	=> $this->request->getPost('pix_cert'),
+			'sandbox'     		=> $this->request->getPost('sandbox'),
+			'debug'	            => $this->request->getPost('debug'),
+			'timeout' 	        => $this->request->getPost('timeout')
+		];
+
+		if (!$gateways->save($gateway)) {
 			return redirect()->back()->withInput()->with('errors', $gateways->errors());
-        }
-        return redirect()->back()->with('success', 'Success! You created a new account');
+		}
+		return redirect()->back()->with('success', 'Success! You created a new account');
 	}
-
-
 }

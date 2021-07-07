@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -60,26 +61,25 @@ class InvoicesController extends Controller
 	protected $config;
 
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
 		// start session
 		$this->session = Services::session();
-
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Displays account settings.
 	 */
-        
+
 	public function invoices()
 	{
 
 
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->route('public/login');
 		}
 
@@ -95,7 +95,6 @@ class InvoicesController extends Controller
 			'countinvoices' => $countInvoices
 
 		]);
-
 	}
 
 
@@ -117,19 +116,14 @@ class InvoicesController extends Controller
 			'created_by' 	=> $this->request->getPost('created_by'),
 		];
 
-		if (! $invoices->save($invoice)) {
+		if (!$invoices->save($invoice)) {
 			return redirect()->back()->withInput()->with('errors', $invoices->errors());
-        }
-        return redirect()->to('invoices')->with('success', lang('Auth.updateSuccess'));
+		}
+		return redirect()->to('invoices')->with('success', lang('Auth.updateSuccess'));
 	}
 
 
 	public function deleteInvoice()
 	{
-
 	}
-
-
-
-	}
-
+}

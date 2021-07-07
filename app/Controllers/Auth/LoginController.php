@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -57,7 +58,7 @@ class LoginController extends Controller
 	protected $config;
 
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
@@ -65,7 +66,7 @@ class LoginController extends Controller
 		$this->session = Services::session();
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Displays login form or redirects if user is already logged in.
@@ -79,7 +80,7 @@ class LoginController extends Controller
 		return view('auth/auth/login');
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Attempts to verify user's credentials through POST request.
@@ -92,17 +93,16 @@ class LoginController extends Controller
 			'password' 	=> 'required|min_length[5]',
 		];
 
-		if (! $this->validate($rules)) {
+		if (!$this->validate($rules)) {
 			return redirect()->route('login')->withInput()->with('errors', $this->validator->getErrors());
 		}
 
 		// check credentials
 		$users = new UserModel();
-		
+
 		$user = $users->where('email', $this->request->getPost('email'))->first();
-		
-		if ( is_null($user) || ! password_verify($this->request->getPost('password'), $user['password_hash']) ) 
-		{
+
+		if (is_null($user) || !password_verify($this->request->getPost('password'), $user['password_hash'])) {
 			return redirect()->route('login')->withInput()->with('error', lang('Auth.wrongCredentials'));
 		}
 
@@ -114,18 +114,18 @@ class LoginController extends Controller
 		// login OK, save user data to session
 		$this->session->set('isLoggedIn', true);
 		$this->session->set('userData', [
-            'id' 			=> $user["id"],
-            'name' 			=> $user["name"],
-            'firstname' 	=> $user["firstname"],
-            'lastname' 		=> $user["lastname"],
-            'email' 		=> $user["email"],
-            'new_email' 	=> $user["new_email"]
-        ]);
+			'id' 			=> $user["id"],
+			'name' 			=> $user["name"],
+			'firstname' 	=> $user["firstname"],
+			'lastname' 		=> $user["lastname"],
+			'email' 		=> $user["email"],
+			'new_email' 	=> $user["new_email"]
+		]);
 
-        // save login info to user login logs for tracking
-        // get user agent
-        $agent = $this->request->getUserAgent();
-        // load logs model
+		// save login info to user login logs for tracking
+		// get user agent
+		$agent = $this->request->getUserAgent();
+		// load logs model
 		$logs = new LogsModel();
 		// logs data
 		$userlog = [
@@ -135,15 +135,15 @@ class LoginController extends Controller
 			'name'	=> $user["name"],
 			'ip'	=> $this->request->getIPAddress(),
 			'browser'	=> $agent->getBrowser(),
-			'status'	=> 'Success' 
+			'status'	=> 'Success'
 		];
 		// logs to database
 		$logs->save($userlog);
 
-        return redirect()->route('dashboard');
+		return redirect()->route('dashboard');
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Log the user out.
@@ -152,7 +152,6 @@ class LoginController extends Controller
 	{
 		$this->session->remove(['isLoggedIn', 'userData']);
 
-        return redirect()->to(site_url('../'));
+		return redirect()->to(site_url('../'));
 	}
-
 }

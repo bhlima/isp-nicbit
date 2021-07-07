@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -56,7 +57,7 @@ class TransactionsController extends Controller
 
 	public function transactions()
 	{
-		if (! $this->session->isLoggedIn) {
+		if (!$this->session->isLoggedIn) {
 			return redirect()->to('login');
 		}
 
@@ -64,16 +65,15 @@ class TransactionsController extends Controller
 
 		$transactions = new TransactionsModel();
 
-		$alltransaction = $transactions->findAll(); 
+		$alltransaction = $transactions->findAll();
 
-		$ntransaction = $transactions->countAll(); 
+		$ntransaction = $transactions->countAll();
 
-	
+
 		return view('auth/transactions', [
-				'userData'          	=> $this->session->userData, 
-				'data'       			=> $alltransaction, 
-				'ntransaction'        	=> $ntransaction, 
-			]);
+			'userData'          	=> $this->session->userData,
+			'data'       			=> $alltransaction,
+			'ntransaction'        	=> $ntransaction,
+		]);
 	}
-
 }

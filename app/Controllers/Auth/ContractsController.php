@@ -39,6 +39,9 @@ namespace App\Controllers\Auth;
 use CodeIgniter\Controller;
 use Config\Services;
 use App\Models\ContractModel;
+use App\Models\ClientsModel;
+use App\Models\PlansModel;
+
 
 class ContractsController extends Controller
 {
@@ -74,9 +77,34 @@ class ContractsController extends Controller
 
 
 
+	public function addcontract()
+	{
+
+        $username = $this->request->uri->getSegment(3);
+		$clients = new ClientsModel();
+		$plans	 = new PlansModel();
+		$contracts = new ContractModel();
+		
+		$client = $clients->where('username', $username)->first(); 
+
+		return view('auth/add-contracts', [
+			'userData'          => $this->session->userData, 
+			'client'            => $client, 
+			'username'			=> $username,
+		]);
+
+	}
+
+
+
 
 	public function edit()
 	{
+
+		if (! $this->session->isLoggedIn) {
+			return redirect()->to('login');
+		}
+
 		$id = $this->request->uri->getSegment(3);
 		$contracts = new ContractModel();
 		$contract = $contracts->where('id', $id)->first(); 
@@ -90,6 +118,11 @@ class ContractsController extends Controller
 
 	public function update()
 	{
+
+		if (! $this->session->isLoggedIn) {
+			return redirect()->to('login');
+		}
+
 		$rules = [
 			'id'     		        => 'required',
             'usernam' 		        => 'required',
@@ -121,6 +154,12 @@ class ContractsController extends Controller
 
 	public function delete()
 	{
+
+
+		if (! $this->session->isLoggedIn) {
+			return redirect()->to('login');
+		}
+
 		$id = $this->request->uri->getSegment(3);
 		$contracts = new ContractModel();
 		$contracts->delete($id);
@@ -131,6 +170,11 @@ class ContractsController extends Controller
 	public function create()
 	{
 		helper('text');
+
+
+		if (! $this->session->isLoggedIn) {
+			return redirect()->to('login');
+		}
 
 		// save new user, validation happens in the model
 		$contracts = new ContractModel();

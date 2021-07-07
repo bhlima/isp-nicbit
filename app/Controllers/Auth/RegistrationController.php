@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Auth;
 
 /**
@@ -57,7 +58,7 @@ class RegistrationController extends Controller
 	protected $config;
 
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	public function __construct()
 	{
@@ -65,7 +66,7 @@ class RegistrationController extends Controller
 		$this->session = Services::session();
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Displays register form.
@@ -79,7 +80,7 @@ class RegistrationController extends Controller
 		return view('auth/auth/register');
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Attempt to register a new user.
@@ -92,32 +93,32 @@ class RegistrationController extends Controller
 		$users = new UserModel();
 		$getRule = $users->getRule('registration');
 		$users->setValidationRules($getRule);
-		
-        $user = [
-            'firstname'          	=> $this->request->getPost('firstname'),
-            'lastname'          	=> $this->request->getPost('lastname'),
-            'name'          	=> $this->request->getPost('name'),
-            'email'         	=> $this->request->getPost('email'),
-            'password'     		=> $this->request->getPost('password'),
-            'password_confirm'	=> $this->request->getPost('password_confirm'),
-            'activate_hash' 	=> random_string('alnum', 32)
-        ];
 
-        if (! $users->save($user)) {
+		$user = [
+			'firstname'          	=> $this->request->getPost('firstname'),
+			'lastname'          	=> $this->request->getPost('lastname'),
+			'name'          	=> $this->request->getPost('name'),
+			'email'         	=> $this->request->getPost('email'),
+			'password'     		=> $this->request->getPost('password'),
+			'password_confirm'	=> $this->request->getPost('password_confirm'),
+			'activate_hash' 	=> random_string('alnum', 32)
+		];
+
+		if (!$users->save($user)) {
 			return redirect()->back()->withInput()->with('errors', $users->errors());
-        }
+		}
 
 		// send activation email //
 		// send email activation is commented no email support //
-		
+
 		// helper('auth'); 
-        // send_activation_email($user['email'], $user['activate_hash']);
+		// send_activation_email($user['email'], $user['activate_hash']);
 
 		// success
-        return redirect()->to('login')->with('success', lang('Auth.registrationSuccess'));
+		return redirect()->to('login')->with('success', lang('Auth.registrationSuccess'));
 	}
 
-    //--------------------------------------------------------------------
+	//--------------------------------------------------------------------
 
 	/**
 	 * Activate account.
@@ -143,5 +144,4 @@ class RegistrationController extends Controller
 
 		return redirect()->to('login')->with('success', lang('Auth.activationSuccess'));
 	}
-
 }
