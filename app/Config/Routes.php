@@ -189,6 +189,13 @@ $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
 
     //Ajax teste bet
     $routes->get('clients/getM/(:any)', 'Auth\ClientsController::getMunicipios');
+    $routes->get('contracts/getS/(:any)', 'Auth\ContractsController::getSubgroup');
+    $routes->get('contracts/getP/(:any)', 'Auth\ContractsController::getplans');
+
+
+
+
+
 
     // Settings
     $routes->get('settings', 'Auth\SettingsController::settings', ['as' => 'settings']); // new

@@ -41,7 +41,7 @@ use Config\Services;
 use App\Models\ContractModel;
 use App\Models\ClientsModel;
 use App\Models\PlansModel;
-
+use App\Models\AreasModel;
 
 class ContractsController extends Controller
 {
@@ -80,6 +80,10 @@ class ContractsController extends Controller
 	public function addcontract()
 	{
 
+		if (! $this->session->isLoggedIn) {
+			return redirect()->to('login');
+		}
+
         $username = $this->request->uri->getSegment(3);
 		$clients = new ClientsModel();
 		$plans	 = new PlansModel();
@@ -91,10 +95,30 @@ class ContractsController extends Controller
 			'userData'          => $this->session->userData, 
 			'client'            => $client, 
 			'username'			=> $username,
+			'areaoptions'		=> $this->getgroupareas()
 		]);
 
 	}
 
+
+	public function getSubgroup()
+	{
+
+		$id_group = $this->request->uri->getSegment(3);
+		$query = "select * from subarea where  id_grouparea = '" . $id_group . "'";
+		$subgroups  = new AreasModel();
+		$s = $subgroups->query($query);
+
+		//print_r($s);exit;
+		
+		$row = $s->getResult();
+		$options = "<option value = '' > Escolha o Sub Grupo </options>";
+
+		foreach ($row as $sub) {
+			$options .= "<option value='" . $sub->id . "'>" . $sub->subgroup_name . "</option>" . PHP_EOL;
+		}
+		return $options;
+	}
 
 
 
@@ -179,8 +203,7 @@ class ContractsController extends Controller
 		// save new user, validation happens in the model
 		$contracts = new ContractModel();
 		$getRule = $contracts->getRule('cadastro');
-		$contracts->setValidationRules($getRule);
-		
+		$contracts->setValidationRules($getRule);	
         $contract = [
             'id'          	    => $this->request->getPost('id'),
             'usernam'           => $this->request->getPost('username'),
@@ -191,8 +214,37 @@ class ContractsController extends Controller
         if (! $contracts->save($contract)) {
 			return redirect()->back()->withInput()->with('errors', $contracts->errors());
         }
-        return redirect()->back()->with('success', 'Success! You created a new account');
+        return redirect()->back()->with('success', 'Successo! You created a new account');
 	}
+
+
+	public function getgroupareas()
+    {
+        $areas  = new AreasModel();
+        $groups = $areas->query('select * from areas');
+        $row = $groups->getResult();
+        $options = "<option value = '' > Escolha o Grupo </options>";
+
+        foreach ($row as $group) {
+            $options .= "<option value='" . $group->id . "'>" . $group->groupareas . "</option>" . PHP_EOL;
+        }
+        return $options;
+    }
+
+	public function getplans()
+    {
+        $plans  = new PLansModel();
+        $allplans = $plans->query('select * from planos');
+        $row = $allplans->getResult();
+        $options = "<option value = '' > Escolha o Plano </options>";
+
+        foreach ($row as $plan) {
+            $options .= "<option value='" . $plan->id . "'>" . $plan->nome . "</option>" . PHP_EOL;
+        }
+        return $options;
+    }
+
+
 
 
 }

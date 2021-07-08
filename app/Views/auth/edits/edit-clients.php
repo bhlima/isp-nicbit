@@ -1,6 +1,23 @@
 <!-- load main layout -->
 <?= $this->extend('auth/layouts/default-table-ajax') ?>
 <!-- load main content -->
+<?= $this->section('script') ?>
+<script type="text/javascript">
+    $("#estados").on("change", function() {
+        var uf = $("#estados").val();
+        $.get('http://190.89.81.70/nicbit/public/index.php/clients/getM/' + uf, function(data, status) {
+
+            if (status == "success") {
+                $('#cidades').html(data);
+            }
+        });
+    });
+</script>
+
+<?= $this->endSection('script') ?>
+
+
+<!-- load main content -->
 <?= $this->section('main') ?>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-3">
     <h1 class="h2"><?= lang('update') ?>: <?= $data['username'] ?></h1>
@@ -11,12 +28,8 @@
 </div>
 <div class="card p-5">
     <form action="<?= site_url('clients/upinfo'); ?>" method="POST" accept-charset="UTF-8" onsubmit="Button.disabled = true; return true;">
-
         <?= csrf_field() ?>
-
-
         <div class="form-group row">
-
             <div class="col">
                 <label for="nome">Nome</label>
                 <input class="form-control form-control-sm" required type="text" name="nome" value="<?= $data['nome'] ?>" />

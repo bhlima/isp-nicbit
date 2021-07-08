@@ -54,19 +54,7 @@
     <script src="<?= base_url("vendor/bootstrap/js/bootstrap.bundle.min.js") ?>" type="text/javascript"></script>
     <script src="<?= base_url("vendor/datatables/datatables.min.js") ?>" type="text/javascript"></script>
  
-    <script type="text/javascript">
 
-    $("#estados").on("change" , function(){
-        var uf = $("#estados").val();
-        $.get('http://190.89.81.70/nicbit/public/index.php/clients/getM/'+uf,function(data,status){
-            
-    if (status == "success"){
-        $('#cidades').html(data);
-    }
-    
-    });
-    });
-</script>
 
 <script>
 function ValidaCPF(){	

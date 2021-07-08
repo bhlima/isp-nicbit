@@ -122,8 +122,8 @@ class AccountController extends Controller
 
 		$query = array();
 		$query  = $radacct->query("SELECT day(acctupdatetime) as time, sum(acctoutputoctets) as output, 
-							sum(acctinputoctets) as input from radacct group by day(acctupdatetime), 
-							month(acctupdatetime) order by month(acctupdatetime), day(acctupdatetime);");
+							sum(acctinputoctets) as input from radacct  group by day(acctupdatetime), 
+							month(acctupdatetime)  order by month(acctupdatetime), day(acctupdatetime);");
 		$plabels 	= '[';
 		$grafico1	= '[';
 		$grafico2 	= '[';
@@ -232,7 +232,6 @@ class AccountController extends Controller
 
 		// update session data
 		$this->session->push('userData', $user);
-
 		return redirect()->to('account')->with('success', lang('Auth.updateSuccess'));
 	}
 
