@@ -104,13 +104,16 @@ class ContractsController extends Controller
 	public function getSubgroup()
 	{
 
+		if (! $this->session->isLoggedIn) {
+			return redirect()->to('login');
+		}
+
 		$id_group = $this->request->uri->getSegment(3);
 		$query = "select * from subarea where  id_grouparea = '" . $id_group . "'";
 		$subgroups  = new AreasModel();
 		$s = $subgroups->query($query);
 
-		//print_r($s);exit;
-		
+
 		$row = $s->getResult();
 		$options = "<option value = '' > Escolha o Sub Grupo </options>";
 
@@ -220,6 +223,11 @@ class ContractsController extends Controller
 
 	public function getgroupareas()
     {
+
+		if (! $this->session->isLoggedIn) {
+			return redirect()->to('login');
+		}
+
         $areas  = new AreasModel();
         $groups = $areas->query('select * from areas');
         $row = $groups->getResult();
@@ -233,6 +241,12 @@ class ContractsController extends Controller
 
 	public function getplans()
     {
+
+
+		if (! $this->session->isLoggedIn) {
+			return redirect()->to('login');
+		}
+
         $plans  = new PLansModel();
         $allplans = $plans->query('select * from planos');
         $row = $allplans->getResult();
